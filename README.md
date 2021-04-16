@@ -1,2 +1,2 @@
-# ngis-jira-test
+# jira-tests
 Jira Automated Tests
