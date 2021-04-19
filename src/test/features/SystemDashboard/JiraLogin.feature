@@ -56,7 +56,7 @@ Feature: End to end Jira flow
     And User should see the ticket status as "Manual execution"
     And User should be able to able to update the workflow as "Deprecated"
     And User should see the ticket status as "Deprecated"
-
+    Then User should logout from the Jira
 
     Examples:
       | projectName          | issueType | summaryText | application | workStream | description                 | priority | assignee          |
