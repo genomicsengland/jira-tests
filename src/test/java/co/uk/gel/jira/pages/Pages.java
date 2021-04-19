@@ -9,6 +9,7 @@ public class Pages implements Navigable {
 
     protected WebDriver driver;
     protected JiraPage jiraPage;
+    protected ConfluencePage confluencePage;
 
     public Pages(SeleniumDriver driver) {
         this.driver = driver;
@@ -18,6 +19,7 @@ public class Pages implements Navigable {
     public void PageObjects() {
 
         jiraPage = PageFactory.initElements(driver, JiraPage.class);
+        confluencePage =PageFactory.initElements(driver, ConfluencePage.class);
     }
 
 

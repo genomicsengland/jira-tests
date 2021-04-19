@@ -12,11 +12,15 @@ import org.openqa.selenium.Rotatable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.CapabilityType;
@@ -56,6 +60,12 @@ public class BrowserFactory {
 
                     case SAFARI:
                         driver = getSafariDriver(null, javascriptEnabled);
+                        break;
+
+                    case EDGE:
+                        WebDriverManager.edgedriver().clearPreferences();
+                        WebDriverManager.edgedriver().forceDownload().setup();
+                        driver = getEdge(null, javascriptEnabled);
                         break;
                     default:
                       Debugger.println("Invalid Browser information");
@@ -146,28 +156,38 @@ public class BrowserFactory {
         firefoxOptions.setCapability("marionette", true);
         return firefoxOptions;
     }
+    private WebDriver getEdge(String userAgent, boolean javascriptEnabled) {
+        EdgeOptions edgeOptions = getEdgeLocalOptions(userAgent,javascriptEnabled);
+        return driver = new EdgeDriver(edgeOptions);
 
-
-
-    private ChromeOptions getChromeOptions(String userAgent,
-                                           boolean javascriptEnabled) {
-        ChromeOptions opts = new ChromeOptions();
-        opts.addArguments("--disable-gpu");
-        opts.addArguments("--whitelisted-ips");
-        opts.addArguments("--no-sandbox");
-        if (null != userAgent) {
-            opts.addArguments("user-agent=" + userAgent);
-        }
-        opts.setExperimentalOption("prefs", downloadPathSetup());
-        if (!javascriptEnabled) {
-            opts.addArguments("disable-javascript");
-        }
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
-        capabilities.setCapability("chrome.switches", Arrays.asList("--incognito"));
-        opts.merge(capabilities);
-        return opts;
     }
+
+    private EdgeOptions getEdgeLocalOptions(String userAgent, boolean javascriptEnabled) {
+        EdgeOptions edgeLocalOptions = new EdgeOptions();
+        edgeLocalOptions.setCapability("prefs", downloadPathSetup());
+        return edgeLocalOptions;
+    }
+
+
+//    private ChromeOptions getChromeOptions(String userAgent,
+//                                           boolean javascriptEnabled) {
+//        ChromeOptions opts = new ChromeOptions();
+//        opts.addArguments("--disable-gpu");
+//        opts.addArguments("--whitelisted-ips");
+//        opts.addArguments("--no-sandbox");
+//        if (null != userAgent) {
+//            opts.addArguments("user-agent=" + userAgent);
+//        }
+//        opts.setExperimentalOption("prefs", downloadPathSetup());
+//        if (!javascriptEnabled) {
+//            opts.addArguments("disable-javascript");
+//        }
+//        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+//        capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
+//        capabilities.setCapability("chrome.switches", Arrays.asList("--incognito"));
+//        opts.merge(capabilities);
+//        return opts;
+//    }
 
 
     private WebDriver getChromeDriver(String userAgent, boolean javascriptEnabled) {
@@ -177,6 +197,9 @@ public class BrowserFactory {
     private ChromeOptions getChromeLocalOptions(String userAgent,
                                                 boolean javascriptEnabled) {
         ChromeOptions chromeLocalOptions = new ChromeOptions();
+        chromeLocalOptions.addArguments("--disable-gpu");
+        chromeLocalOptions.addArguments("--no-sandbox");
+//        chromeLocalOptions.addArguments("--whitelisted-ips");
         if (null != userAgent) {
             chromeLocalOptions.addArguments("user-agent=" + userAgent);
         }
@@ -184,6 +207,9 @@ public class BrowserFactory {
         if (!javascriptEnabled) {
             chromeLocalOptions.addArguments("disable-javascript");
         }
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+        chromeLocalOptions.setCapability("goog:loggingPrefs", logPrefs);
         return chromeLocalOptions;
     }
 

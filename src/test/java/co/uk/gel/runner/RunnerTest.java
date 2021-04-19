@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
         plugin = {"pretty", "html:target/cucumber","json:target/cucumber.json"},
         glue = {"co/uk/gel/jira/steps"},
         features = {"src/test/features"},
-        tags = {"@Jira"}
+        tags = {"@confluence"}
 )
 public class RunnerTest {
     @BeforeClass

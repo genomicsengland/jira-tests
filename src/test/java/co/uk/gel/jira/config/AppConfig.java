@@ -24,6 +24,8 @@ public class AppConfig {
     public static String systemDashboard, serviceDesk, confluencePage;
     public static String jiraUsername;
     public static String jiraPassword;
+    public static String confluenceUsername;
+    public static String confluencePassword;
   /*  private static String appUsername;
     private static String appPassword;*/
 
@@ -38,6 +40,8 @@ public class AppConfig {
         confluencePage = appConfig.getProperty("APP_URL_CNFL_PAGE");
        jiraUsername =appConfig.getProperty("APP_JIRA_USER_NAME");
        jiraPassword =appConfig.getProperty("APP_JIRA_PASSWORD");
+       confluenceUsername=appConfig.getProperty("APP_CONF_USER_NAME");
+       confluencePassword=appConfig.getProperty("APP_CONF_PASSWORD");
 
     }
     public static String getDevice() {
