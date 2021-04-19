@@ -1,4 +1,4 @@
-
+@Jira
 Feature: End to end Jira flow
 
 @JiraWorkflow1
@@ -25,7 +25,7 @@ Feature: End to end Jira flow
   And User should see the ticket status as "Manual execution"
   And User should be able to able to update the workflow as "Scenario change required"
   And User should see the ticket status as "Scenario change required"
-
+  Then User should logout from the Jira
 
   Examples:
     | projectName          | issueType | summaryText | application | workStream | description                 | priority | assignee          |
@@ -36,6 +36,7 @@ Feature: End to end Jira flow
   @JiraWorkflow2
   Scenario Outline: Login to the System Dashboard and create a ticket and complete the workflow 2
 
+    Given User is logged in to the Jira System Dashboard
     And  User should click on the the Create button
     And User should be able to select the project "<projectName>"
     And User should be able to select the Issue Type "<issueType>"
@@ -67,6 +68,7 @@ Feature: End to end Jira flow
   @JiraWorkflow3
   Scenario Outline: Login to the System Dashboard and create a ticket and complete the workflow 3
 
+    Given User is logged in to the Jira System Dashboard
     And  User should click on the the Create button
     And User should be able to select the project "<projectName>"
     And User should be able to select the Issue Type "<issueType>"
@@ -91,7 +93,7 @@ Feature: End to end Jira flow
     And User should see the ticket status as "Automation review"
     And User should be able to able to update the workflow as "Automated execution"
     And User should see the ticket status as "Automated execution"
-
+    Then User should logout from the Jira
 
     Examples:
       | projectName          | issueType | summaryText | application | workStream | description                 | priority | assignee          |
@@ -103,6 +105,7 @@ Feature: End to end Jira flow
   @JiraWorkflow4
   Scenario Outline: Login to the System Dashboard and create a ticket and complete the workflow 4
 
+    Given User is logged in to the Jira System Dashboard
     And  User should click on the the Create button
     And User should be able to select the project "<projectName>"
     And User should be able to select the Issue Type "<issueType>"
@@ -127,7 +130,7 @@ Feature: End to end Jira flow
     And User should see the ticket status as "Automation review"
     And User should be able to able to update the workflow as "Automation change requ..."
     And User should see the ticket status as "Automation change required"
-
+    Then User should logout from the Jira
 
     Examples:
       | projectName          | issueType | summaryText | application | workStream | description                 | priority | assignee          |
@@ -137,7 +140,7 @@ Feature: End to end Jira flow
   @JiraWorkflow5
   Scenario Outline: Login to the System Dashboard and create a ticket and complete the workflow 5
 
-
+    Given User is logged in to the Jira System Dashboard
     And  User should click on the the Create button
     And User should be able to select the project "<projectName>"
     And User should be able to select the Issue Type "<issueType>"
@@ -164,7 +167,7 @@ Feature: End to end Jira flow
     And User should see the ticket status as "Automated execution"
     And User should be able to able to update the workflow as "Deprecated"
     And User should see the ticket status as "Deprecated"
-
+    Then User should logout from the Jira
 
     Examples:
       | projectName          | issueType | summaryText | application | workStream | description                 | priority | assignee          |
@@ -174,7 +177,7 @@ Feature: End to end Jira flow
   @JiraWorkflow6
   Scenario Outline: Login to the System Dashboard and create a ticket and complete the workflow 6
 
-
+    Given User is logged in to the Jira System Dashboard
     And  User should click on the the Create button
     And User should be able to select the project "<projectName>"
     And User should be able to select the Issue Type "<issueType>"
@@ -201,7 +204,7 @@ Feature: End to end Jira flow
     And User should see the ticket status as "Automated execution"
     And User should be able to able to update the workflow as "Scenario change required"
     And User should see the ticket status as "Scenario change required"
-
+    Then User should logout from the Jira
 
 
     Examples:
@@ -211,7 +214,7 @@ Feature: End to end Jira flow
   @JiraWorkflow7
   Scenario Outline: Login to the System Dashboard and create a ticket and complete the workflow 7
 
-
+    Given User is logged in to the Jira System Dashboard
     And  User should click on the the Create button
     And User should be able to select the project "<projectName>"
     And User should be able to select the Issue Type "<issueType>"

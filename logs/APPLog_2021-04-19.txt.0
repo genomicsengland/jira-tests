@@ -1,0 +1,141 @@
+
+******* RUN STARTS Mon Apr 19 10:10:57 IST 2021 *******************************
+
+[@JiraWorkflow1] STARTED
+FEATURE: END-TO-END-JIRA-FLOW
+User is logged into the System Dashboard successfully
+The Create Issue window has opened
+The Project value is selected
+The Issue type is selected
+The application is provided
+The Summary is provided as Test_22
+The workstream is provided
+The Description is provided
+The priority value is selected
+The assignee is selected
+The ticket has been submitted
+The ticket ID is TP-546 - Test_22
+The ticket has been accessed
+The ticket Id is TP-546
+STATUS: PASSED
+
+[@JiraWorkflow2] STARTED
+FEATURE: END-TO-END-JIRA-FLOW
+Exception : SeleniumLib.clickOnElement: By.xpath: //li[@id='create-menu']
+org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//li[@id='create-menu']"}
+  (Session info: chrome=89.0.4389.128)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.141.0', revision: '2ecb7d9a', time: '2018-10-31T20:09:30'
+System info: host: 'LAPTOP-4N4IOT9R', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_221'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 89.0.4389.128, chrome: {chromedriverVersion: 89.0.4389.23 (61b08ee2c5002..., userDataDir: C:\Users\stag\AppData\Local...}, goog:chromeOptions: {debuggerAddress: localhost:62867}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: cbe89a62c33424a73d1f146d599df596
+*** Element info: {Using=xpath, value=//li[@id='create-menu']}
+Failed to open the create issue window
+STATUS: FAILED
+
+***** Run COMPLETED Mon Apr 19 10:14:09 IST 2021 *****
+
+******* RUN STARTS Mon Apr 19 11:08:49 IST 2021 *******************************
+
+[@Jira, @JiraWorkflow1] STARTED
+FEATURE: END-TO-END-JIRA-FLOW
+User is logged into the System Dashboard successfully
+The Create Issue window has opened
+The Project value is selected
+Exception in selectIssueTypeDropDownValue: org.openqa.selenium.ElementNotInteractableException: element not interactable
+  (Session info: chrome=89.0.4389.128)
+Build info: version: '3.141.0', revision: '2ecb7d9a', time: '2018-10-31T20:09:30'
+System info: host: 'LAPTOP-4N4IOT9R', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_221'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 89.0.4389.128, chrome: {chromedriverVersion: 89.0.4389.23 (61b08ee2c5002..., userDataDir: C:\Users\stag\AppData\Local...}, goog:chromeOptions: {debuggerAddress: localhost:64040}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: f6188f4ac4210ee05386dccd3fb7a58b
+STATUS: FAILED
+
+[@Jira, @JiraWorkflow2] STARTED
+FEATURE: END-TO-END-JIRA-FLOW
+Exception : SeleniumLib.clickOnElement: By.xpath: //li[@id='create-menu']
+org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//li[@id='create-menu']"}
+  (Session info: chrome=89.0.4389.128)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.141.0', revision: '2ecb7d9a', time: '2018-10-31T20:09:30'
+System info: host: 'LAPTOP-4N4IOT9R', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_221'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 89.0.4389.128, chrome: {chromedriverVersion: 89.0.4389.23 (61b08ee2c5002..., userDataDir: C:\Users\stag\AppData\Local...}, goog:chromeOptions: {debuggerAddress: localhost:64077}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 439ad09620cfe326e57437ccdc566385
+*** Element info: {Using=xpath, value=//li[@id='create-menu']}
+Failed to open the create issue window
+STATUS: FAILED
+
+***** Run COMPLETED Mon Apr 19 11:10:30 IST 2021 *****
+
+******* RUN STARTS Mon Apr 19 11:13:04 IST 2021 *******************************
+
+[@Jira, @JiraWorkflow1] STARTED
+FEATURE: END-TO-END-JIRA-FLOW
+User is logged into the System Dashboard successfully
+The Create Issue window has opened
+The Project value is selected
+The Issue type is selected
+The application is provided
+The Summary is provided as Test_82
+The workstream is provided
+The Description is provided
+The priority value is selected
+The assignee is selected
+The ticket has been submitted
+The ticket ID is TP-547 - Test_82
+The ticket has been accessed
+The ticket Id is TP-547
+Failed to check the ticket status
+STATUS: FAILED
+
+[@Jira, @JiraWorkflow2] STARTED
+FEATURE: END-TO-END-JIRA-FLOW
+Exception : SeleniumLib.clickOnElement: By.xpath: //li[@id='create-menu']
+org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//li[@id='create-menu']"}
+  (Session info: chrome=89.0.4389.128)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.141.0', revision: '2ecb7d9a', time: '2018-10-31T20:09:30'
+System info: host: 'LAPTOP-4N4IOT9R', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_221'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 89.0.4389.128, chrome: {chromedriverVersion: 89.0.4389.23 (61b08ee2c5002..., userDataDir: C:\Users\stag\AppData\Local...}, goog:chromeOptions: {debuggerAddress: localhost:64207}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 6c34575ccdb388a1aa382b971fc31332
+*** Element info: {Using=xpath, value=//li[@id='create-menu']}
+Failed to open the create issue window
+STATUS: FAILED
+
+***** Run COMPLETED Mon Apr 19 11:15:57 IST 2021 *****
+
+[@Jira, @JiraWorkflow1] STARTED
+FEATURE: END-TO-END-JIRA-FLOW
+User is logged into the System Dashboard successfully
+The Create Issue window has opened
+The Project value is selected
+The Issue type is selected
+The application is provided
+The Summary is provided as Test_30
+The workstream is provided
+The Description is provided
+The priority value is selected
+The assignee is selected
+The ticket has been submitted
+The ticket ID is TP-548 - Test_30
+The ticket has been accessed
+The ticket Id is TP-548
+STATUS: PASSED
+
+[@Jira, @JiraWorkflow2] STARTED
+FEATURE: END-TO-END-JIRA-FLOW
+Exception : SeleniumLib.clickOnElement: By.xpath: //li[@id='create-menu']
+org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//li[@id='create-menu']"}
+  (Session info: chrome=89.0.4389.128)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.141.0', revision: '2ecb7d9a', time: '2018-10-31T20:09:30'
+System info: host: 'LAPTOP-4N4IOT9R', ip: '10.0.75.1', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_221'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 89.0.4389.128, chrome: {chromedriverVersion: 89.0.4389.23 (61b08ee2c5002..., userDataDir: C:\Users\stag\AppData\Local...}, goog:chromeOptions: {debuggerAddress: localhost:64503}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 0573457369d827df84ae60319671be83
+*** Element info: {Using=xpath, value=//li[@id='create-menu']}
+Failed to open the create issue window
+STATUS: FAILED

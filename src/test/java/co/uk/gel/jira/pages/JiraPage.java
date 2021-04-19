@@ -124,7 +124,7 @@ public class JiraPage {
             return true;
         } catch (Exception exp) {
             Debugger.println("Failed to open the create issue window");
-            SeleniumLib.takeAScreenShot("createIssueWindowOpened.jpg");
+            SeleniumLib.takeAScreenShot("createIssueWindowNotOpened.jpg");
             return false;
         }
     }
