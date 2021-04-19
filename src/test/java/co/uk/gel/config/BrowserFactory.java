@@ -152,12 +152,20 @@ public class BrowserFactory {
     private ChromeOptions getChromeOptions(String userAgent,
                                            boolean javascriptEnabled) {
         ChromeOptions opts = new ChromeOptions();
+        opts.addArguments("--disable-gpu");
+        opts.addArguments("--whitelisted-ips");
+        opts.addArguments("--no-sandbox");
         if (null != userAgent) {
             opts.addArguments("user-agent=" + userAgent);
         }
+        opts.setExperimentalOption("prefs", downloadPathSetup());
         if (!javascriptEnabled) {
             opts.addArguments("disable-javascript");
         }
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
+        capabilities.setCapability("chrome.switches", Arrays.asList("--incognito"));
+        opts.merge(capabilities);
         return opts;
     }
 
@@ -172,14 +180,14 @@ public class BrowserFactory {
         if (null != userAgent) {
             chromeLocalOptions.addArguments("user-agent=" + userAgent);
         }
-        chromeLocalOptions.setExperimentalOption("prefs", downloadPathsetup());
+        chromeLocalOptions.setExperimentalOption("prefs", downloadPathSetup());
         if (!javascriptEnabled) {
             chromeLocalOptions.addArguments("disable-javascript");
         }
         return chromeLocalOptions;
     }
 
-    private HashMap downloadPathsetup() {
+    private HashMap downloadPathSetup() {
         String downloadFilePath = System.getProperty("user.dir") + File.separator + "downloads" + File.separator;
         File location = new File(downloadFilePath);
         if (!location.exists()) {
