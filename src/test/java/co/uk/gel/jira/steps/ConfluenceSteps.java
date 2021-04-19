@@ -27,16 +27,6 @@ public class ConfluenceSteps extends Pages {
     }
 
 
-    @Then("^User should be able to create a page$")
-    public void userShouldBeAbleToCreateAPage() throws IOException {
-        boolean testResult = false;
-        testResult = confluencePage.createConfluencePage();
-        if (!testResult) {
-            Assert.fail("Could not create the confluence page");
-            SeleniumLib.takeAScreenShot("failedToCreateConfluencePage.jpg");
-        }
-    }
-
     @Then("^User should be able to provide a page title \"([^\"]*)\"$")
     public void userShouldBeAbleToProvideAPageTitle(String pageTitle) throws Throwable {
         boolean testResult = false;
