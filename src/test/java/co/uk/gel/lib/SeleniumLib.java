@@ -740,4 +740,36 @@ public class SeleniumLib {
         int rand_int = rand.nextInt(99);
     return rand_int;
     }
+
+    public void scrollToElement(WebElement element) {
+        try {
+            if(element == null){
+                return;
+            }
+            Point location = element.getLocation();
+            String script = "scroll(" + location.x + "," + (location.y - 120) + ")";
+            JavascriptExecutor executor = (JavascriptExecutor) driver;
+            executor.executeScript(script);
+        } catch (Exception e) {
+        }
+    }
+    public void clickOnWebElement(WebElement element) {
+        try {
+
+            if(element != null){
+                element.click();
+            }else{
+                Actions actions = new Actions(driver);
+                actions.moveToElement(element).click().perform();
+            }
+        }catch (Exception exp) {
+            try {
+                Actions actions = new Actions(driver);
+                actions.moveToElement(element).click().perform();
+            }catch(Exception exp1){
+                Debugger.println("Exception : SeleniumLib.clickOnElement: "+element.toString()+"\n"+exp1);
+                throw exp1;
+            }
+        }
+    }
 }//end

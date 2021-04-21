@@ -212,7 +212,7 @@ Feature: End to end Jira flow
       | Testing Project (TP) | Test      | Test        | MIS         | General    | This is for testing purpose | 4. Low   | Sailaja  Avirneni |
 
   @JiraWorkflow7
-  Scenario Outline: Login to the System Dashboard and create a ticket and complete the workflow 7
+  Scenario Outline:Create a ticket and complete the workflow 7
 
     Given User is logged in to the Jira System Dashboard
     And  User should click on the the Create button
@@ -226,6 +226,14 @@ Feature: End to end Jira flow
     And User should be able to assign the ticket to the assignee "<assignee>"
     And User should be able to submit the ticket
     And User should be able to see the ticket is created successfully and store the ticketID
+    And User should be able to see the test execution area
+      | Version     |
+      | Status      |
+      | Test Cycle  |
+      | Folder      |
+      | Defects     |
+      | Executed By |
+      | Executed On |
     And User should see the ticket status as "Open"
     And User should be able to able to update the workflow as "Scenario in progress"
     And User should see the ticket status as "Scenario in progress"

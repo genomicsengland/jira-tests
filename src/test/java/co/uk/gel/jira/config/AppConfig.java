@@ -26,6 +26,7 @@ public class AppConfig {
     public static String jiraPassword;
     public static String confluenceUsername;
     public static String confluencePassword;
+    public static String ticketLink;
   /*  private static String appUsername;
     private static String appPassword;*/
 
@@ -42,6 +43,7 @@ public class AppConfig {
        jiraPassword =appConfig.getProperty("APP_JIRA_PASSWORD");
        confluenceUsername=appConfig.getProperty("APP_CONF_USER_NAME");
        confluencePassword=appConfig.getProperty("APP_CONF_PASSWORD");
+       ticketLink=appConfig.getProperty("TICKET_LINK");
 
     }
     public static String getDevice() {

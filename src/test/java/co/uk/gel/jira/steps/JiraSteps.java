@@ -3,13 +3,16 @@ package co.uk.gel.jira.steps;
 import co.uk.gel.config.SeleniumDriver;
 import co.uk.gel.jira.pages.Pages;
 import co.uk.gel.lib.SeleniumLib;
-import cucumber.api.PendingException;
+
+
+import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.junit.Assert;
 
 import java.io.IOException;
+import java.util.List;
 
 public class JiraSteps extends Pages {
 
@@ -170,6 +173,29 @@ public class JiraSteps extends Pages {
         if (!testResult) {
             Assert.fail("Incorrect ticket workflow");
             SeleniumLib.takeAScreenShot("incorrectTicketWorkflow.jpg");
+        }
+    }
+
+    @And("^User should be able to see the test execution area$")
+    public void userShouldBeAbleToSeeTheTestExecutionArea(DataTable columnNames) throws IOException {
+        boolean testResult = false;
+        List<List<String>> testExecutionPlaceholder =columnNames.raw();
+        for(int i=0;i<testExecutionPlaceholder.size();i++){
+            String options =testExecutionPlaceholder.get(i).get(0);
+            testResult = jiraPage.testExecution(options);
+            if (!testResult) {
+                Assert.fail("Test execution not found");
+                SeleniumLib.takeAScreenShot("testExecutionNotFound.jpg");
+        }
+        }
+    }
+
+    @And("^User should access the link$")
+    public void userShouldAccessTheLink() {
+        boolean testResult = false;
+        testResult = jiraPage.ticketLink();
+        if (!testResult) {
+            Assert.fail("ticket link not found");
         }
     }
 }

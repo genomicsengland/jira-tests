@@ -4,7 +4,6 @@ import co.uk.gel.jira.config.AppConfig;
 import co.uk.gel.jira.util.Debugger;
 import co.uk.gel.lib.SeleniumLib;
 import co.uk.gel.lib.Wait;
-import gherkin.lexer.De;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -60,6 +59,14 @@ public class JiraPage {
 
     @FindBy(xpath = "//span[@id='status-val']")
     public WebElement ticketStatus;
+
+    @FindBy(xpath = "(//div[@id='unfreezedGridHeader'])[2]")
+    public WebElement testExecutionPlaceHolder;
+
+    @FindBy(xpath = "//h4[contains(text(),'Test Executions')]")
+    public WebElement testExecutionTitle;
+
+
 
 
     private By createIssueTitle = By.xpath("//h2[contains(text(),'Create Issue')]");
@@ -359,6 +366,42 @@ return true;
         }
     }
 
+    public boolean testExecution(String options) {
+try {
+    testExecutionTitle.isDisplayed();
+    String columnNames = testExecutionPlaceHolder.getText();
+    String [] optionName =columnNames.split("\n");
+    Wait.seconds(2);
+    boolean isPresent = false;
+    for (int i=0;i<optionName.length;i++){
+        Debugger.println("The column names are " +optionName[i]);
+        if (optionName[i].equalsIgnoreCase(options)){
+            Debugger.println("The column names are matching with the provided options");
+            isPresent =true;
+            break;
+        }
+    }
+    if (!isPresent){
+        Debugger.println("The options are not matching");
+        return false;
+    }
+    return true;
+}  catch (Exception exp) {
+    Debugger.println("Failed to check the test execution column names");
+    return false;
+}
+   }
+
+    public boolean ticketLink() {
+        try {
+            driver.get(AppConfig.ticketLink);
+            Wait.seconds(2);
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to check the ticket link");
+            return false;
+        }
+    }
 }//end class
 
 
