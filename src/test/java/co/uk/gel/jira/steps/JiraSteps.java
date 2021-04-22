@@ -179,14 +179,14 @@ public class JiraSteps extends Pages {
     @And("^User should be able to see the test execution area$")
     public void userShouldBeAbleToSeeTheTestExecutionArea(DataTable columnNames) throws IOException {
         boolean testResult = false;
-        List<List<String>> testExecutionPlaceholder =columnNames.raw();
-        for(int i=0;i<testExecutionPlaceholder.size();i++){
-            String options =testExecutionPlaceholder.get(i).get(0);
+        List<List<String>> testExecutionPlaceholder = columnNames.raw();
+        for (int i = 0; i < testExecutionPlaceholder.size(); i++) {
+            String options = testExecutionPlaceholder.get(i).get(0);
             testResult = jiraPage.testExecution(options);
             if (!testResult) {
                 Assert.fail("Test execution not found");
                 SeleniumLib.takeAScreenShot("testExecutionNotFound.jpg");
-        }
+            }
         }
     }
 

@@ -2,15 +2,17 @@ package co.uk.gel.jira.pages;
 
 import co.uk.gel.jira.config.AppConfig;
 import co.uk.gel.jira.util.Debugger;
+import co.uk.gel.jira.util.TestUtils;
 import co.uk.gel.lib.SeleniumLib;
 import co.uk.gel.lib.Wait;
-import gherkin.lexer.De;
+import cucumber.api.java.hu.De;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -60,6 +62,33 @@ public class ConfluencePage {
     @FindBy(xpath = "//a[@id='rte-button-insert-table']/following-sibling::div/div/div/div[4]")
     public WebElement selectTable;
 
+    @FindBy(xpath = "//div[@id='navigation']//a[@id='action-menu-link']")
+    public WebElement clickOnPageOptions;
+
+    @FindBy(xpath = "//span[contains(text(),'Export to PDF')]")
+    public WebElement exportPDF;
+
+    @FindBy(xpath = "//a[@id='k15t-exp-word-export-dialog-web-item']//span[contains(text(),'Export to Word')]")
+    public WebElement exportWord;
+
+    @FindBy(xpath = "//span[contains(text(),'Exporting Word File')]")
+    public WebElement exportWordTitle;
+
+    @FindBy(xpath = "//button[@id='dialog-submit-button']")
+    public WebElement exportWordButton;
+
+    @FindBy(xpath = "//button[contains(text(),'Ok')]")
+    public WebElement exportOkButton;
+
+    @FindBy(xpath = "//button[@class='aui-button aui-button-subtle']/span[@class='icon aui-icon aui-icon-small aui-iconfont-insert-row-before']")
+    public WebElement insertRowAboveButton;
+
+    @FindBy(xpath = "//button[@class='aui-button aui-button-subtle']/span[@class='icon aui-icon aui-icon-small aui-iconfont-insert-column-after']")
+    public WebElement insertColumnRightButton;
+
+
+    @FindBy(xpath = "//button[@class='aui-button aui-button-subtle']/span[@class='icon aui-icon aui-icon-small aui-iconfont-remove-table']")
+    public WebElement deleteTableButton;
 
 
     public ConfluencePage(WebDriver driver) {
@@ -94,12 +123,14 @@ public class ConfluencePage {
     }
 
 
-    public boolean createConfluencePageTitle(String value) throws IOException {
+    public boolean createConfluencePageTitle(String title) throws IOException {
         try {
             Wait.seconds(2);
             pageTitle.isDisplayed();
-            pageTitle.sendKeys(value);
-            Debugger.println("Page Title is " + value);
+            int randomNumber = seleniumLib.getRandomNumber();
+            title = title + "_" + randomNumber;
+            pageTitle.sendKeys(title);
+            Debugger.println("Page Title is " + title);
             pageTitle.sendKeys(Keys.ENTER);
             return true;
         } catch (Exception exp) {
@@ -163,7 +194,7 @@ public class ConfluencePage {
 
 //                    seleniumLib.moveMouseAndClickOnWebElement(pageTreeLinks.get(i));
 //                    seleniumLib.clickOnWebElement(pageTreeLinks.get(i));
-                   seleniumLib.clickonLink(pageTreeName);
+                    seleniumLib.clickonLink(pageTreeName);
                     Wait.seconds(3);
                     Debugger.println("Selected page tree is " + pageTreeName);
                     isPresent = true;
@@ -200,9 +231,11 @@ public class ConfluencePage {
     public boolean enterThePageDescription(String description) throws IOException {
         try {
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@id='wysiwygTextarea_ifr']")));
-By pageDescription = By.xpath("//body[@id='tinymce']/p");
-seleniumLib.clickOnElement(pageDescription);
-            seleniumLib.sendValue(pageDescription,description);
+            By pageDescription = By.xpath("//body[@id='tinymce']/p");
+            seleniumLib.clickOnElement(pageDescription);
+            seleniumLib.sendValue(pageDescription, description);
+            seleniumLib.moveMouseAndClickOnElement(pageDescription);
+
             Wait.seconds(3);
             driver.switchTo().parentFrame();
             driver.switchTo().defaultContent();
@@ -219,10 +252,10 @@ seleniumLib.clickOnElement(pageDescription);
 
             By savePageButton = By.xpath("//button[@name='confirm']");
 
-           seleniumLib.isElementPresent(savePageButton);
-          seleniumLib.clickOnElement(savePageButton);
+            seleniumLib.isElementPresent(savePageButton);
+            seleniumLib.clickOnElement(savePageButton);
 
-          Wait.seconds(5);
+            Wait.seconds(5);
             Debugger.println("The page has been saved successfully");
             return true;
         } catch (Exception exp) {
@@ -237,7 +270,7 @@ seleniumLib.clickOnElement(pageDescription);
         try {
             Wait.seconds(3);
             boolean isPresent = false;
-            for (int i = 0; i <subPageTreeLink.size(); i++) {
+            for (int i = 0; i < subPageTreeLink.size(); i++) {
                 String subPageTreeName = subPageTreeLink.get(i).getText();
                 if (subPageTreeName.equalsIgnoreCase(subPageName)) {
                     Wait.seconds(3);
@@ -280,17 +313,130 @@ seleniumLib.clickOnElement(pageDescription);
     }
 
     public boolean insertTable() throws IOException {
-try{
-    insertTableLink.isDisplayed();
-    insertTableLink.click();
-    Wait.seconds(2);
-    selectTable.click();
-    Wait.seconds(3);
-    return true;
-}catch (Exception exp) {
-    Debugger.println("Table is not inserted" + exp);
-    SeleniumLib.takeAScreenShot("failedToInsertTable.jpg");
-    return false;
-}
+        try {
+            insertTableLink.isDisplayed();
+            insertTableLink.click();
+            Wait.seconds(2);
+            selectTable.click();
+            insertRowAboveButton.click();
+            insertRowAboveButton.click();
+            Wait.seconds(3);
+            insertColumnRightButton.click();
+            insertColumnRightButton.click();
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Table is not inserted" + exp);
+            SeleniumLib.takeAScreenShot("failedToInsertTable.jpg");
+            return false;
+        }
+    }
+
+    public boolean clickOnThePageOptions() throws IOException {
+        try {
+            clickOnPageOptions.isDisplayed();
+            clickOnPageOptions.click();
+            Wait.seconds(3);
+            Debugger.println("The page options are displayed");
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("The page options are not displayed" + exp);
+            SeleniumLib.takeAScreenShot("failedToDisplayOptions.jpg");
+            return false;
+        }
+    }
+
+    public boolean exportToPDF() throws IOException {
+        try {
+
+            String title = pageTitle.getAttribute("value");
+            Debugger.println("The title is " + title);
+            TestUtils.deleteIfFilePresent(title, "");
+
+            if (!exportPDF.isDisplayed()) {
+                Debugger.println("The export PDF option is not displayed");
+                SeleniumLib.takeAScreenShot("ExportPDFNotFound.jpg");
+                return false;
+            }
+            exportPDF.click();
+            Wait.seconds(15);//Wait for 15 seconds to ensure file got downloaded, large file taking time to download
+            Debugger.println("The exported PDF contains the title " + title);
+            return true;
+//            exportPDF.isDisplayed();
+//            exportPDF.click();
+
+        } catch (Exception exp) {
+            Debugger.println("Failed to export to PDF" + exp);
+            SeleniumLib.takeAScreenShot("failedToExportToPDF.jpg");
+            return false;
+        }
+
+    }
+
+    public boolean exportToWord() throws IOException {
+
+        try {
+            String title = pageTitle.getAttribute("value");
+            Debugger.println("The title is " + title);
+            TestUtils.deleteIfFilePresent(title, "");
+
+            exportWord.isDisplayed();
+            exportWord.click();
+            Wait.seconds(10);
+            By exportWindow = By.xpath("//iframe[@class='spark-fullscreen-iframe']");
+            driver.switchTo().frame(driver.findElement(exportWindow));
+
+
+            if (!exportWordTitle.isDisplayed()) {
+                Debugger.println("The export to word window is not opened");
+                return false;
+            } else {
+                exportWordButton.click();
+                Wait.seconds(10);
+                Debugger.println("The export button is clicked");
+                exportOkButton.isDisplayed();
+                exportOkButton.click();
+                Debugger.println("The Ok button is clicked");
+                Wait.seconds(5);
+                driver.switchTo().parentFrame();
+                driver.switchTo().defaultContent();
+                return true;
+            }
+        } catch (Exception exp) {
+            Debugger.println("Failed to export to Word document" + exp);
+            SeleniumLib.takeAScreenShot("failedToExportToWord.jpg");
+            return false;
+        }
+
+    }
+
+    public boolean deleteTheTable() throws IOException {
+        try {
+            By table = By.xpath("//iframe[@id='wysiwygTextarea_ifr']");
+            driver.switchTo().frame(driver.findElement(table));
+            //table[@class='confluenceTable wrapped']/tbody/tr[1]
+            By displayedTable = By.xpath("//table[@class='confluenceTable']/tbody/tr[1]/td[1]");
+
+            seleniumLib.isElementPresent(displayedTable);
+            seleniumLib.clickOnElement(displayedTable);
+
+
+            Wait.seconds(2);
+            driver.switchTo().parentFrame();
+            driver.switchTo().defaultContent();
+            deleteTableButton.click();
+            Wait.seconds(2);
+            if (!seleniumLib.isElementPresent(displayedTable)) {
+                Debugger.println("The table has been deleted");
+                return true;
+            } else {
+                Debugger.println("The table is not deleted");
+                return false;
+            }
+
+        } catch (Exception exp) {
+            Debugger.println("Failed to delete the table" + exp);
+            SeleniumLib.takeAScreenShot("failedToDeleteTable.jpg");
+            return false;
+        }
     }
 }

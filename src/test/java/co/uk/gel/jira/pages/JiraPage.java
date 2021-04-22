@@ -67,8 +67,6 @@ public class JiraPage {
     public WebElement testExecutionTitle;
 
 
-
-
     private By createIssueTitle = By.xpath("//h2[contains(text(),'Create Issue')]");
 
     public JiraPage(WebDriver driver) {
@@ -337,7 +335,7 @@ public class JiraPage {
     public boolean ticketStatus(String expectedStatus) throws IOException {
         try {
             String actualStatus = ticketStatus.getText();
-           Wait.seconds(2);
+            Wait.seconds(2);
             if (!actualStatus.equalsIgnoreCase(expectedStatus)) {
                 Debugger.println("The actual status is not matching with the expected status");
                 SeleniumLib.takeAScreenShot("actualAndExpectedStatusMismatch.jpg");
@@ -354,11 +352,11 @@ public class JiraPage {
 
     public boolean clickOnTheWorkflow(String workflow) throws IOException {
         try {
-            By workflowButton = By.xpath("//span[contains(text(),'"+workflow+"')]");
+            By workflowButton = By.xpath("//span[contains(text(),'" + workflow + "')]");
             WebElement workflowButton1 = driver.findElement(workflowButton);
             workflowButton1.click();
             Wait.seconds(3);
-return true;
+            return true;
         } catch (Exception exp) {
             Debugger.println("Failed to check the ticket status");
             SeleniumLib.takeAScreenShot("ticketStatus.jpg");
@@ -367,30 +365,30 @@ return true;
     }
 
     public boolean testExecution(String options) {
-try {
-    testExecutionTitle.isDisplayed();
-    String columnNames = testExecutionPlaceHolder.getText();
-    String [] optionName =columnNames.split("\n");
-    Wait.seconds(2);
-    boolean isPresent = false;
-    for (int i=0;i<optionName.length;i++){
-        Debugger.println("The column names are " +optionName[i]);
-        if (optionName[i].equalsIgnoreCase(options)){
-            Debugger.println("The column names are matching with the provided options");
-            isPresent =true;
-            break;
+        try {
+            testExecutionTitle.isDisplayed();
+            String columnNames = testExecutionPlaceHolder.getText();
+            String[] optionName = columnNames.split("\n");
+            Wait.seconds(2);
+            boolean isPresent = false;
+            for (int i = 0; i < optionName.length; i++) {
+                Debugger.println("The column names are " + optionName[i]);
+                if (optionName[i].equalsIgnoreCase(options)) {
+                    Debugger.println("The column names are matching with the provided options");
+                    isPresent = true;
+                    break;
+                }
+            }
+            if (!isPresent) {
+                Debugger.println("The options are not matching");
+                return false;
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to check the test execution column names");
+            return false;
         }
     }
-    if (!isPresent){
-        Debugger.println("The options are not matching");
-        return false;
-    }
-    return true;
-}  catch (Exception exp) {
-    Debugger.println("Failed to check the test execution column names");
-    return false;
-}
-   }
 
     public boolean ticketLink() {
         try {

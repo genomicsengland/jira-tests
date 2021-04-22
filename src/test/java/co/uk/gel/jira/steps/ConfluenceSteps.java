@@ -3,6 +3,7 @@ package co.uk.gel.jira.steps;
 import co.uk.gel.config.SeleniumDriver;
 import co.uk.gel.jira.pages.ConfluencePage;
 import co.uk.gel.jira.pages.Pages;
+import co.uk.gel.jira.util.TestUtils;
 import co.uk.gel.lib.SeleniumLib;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -29,9 +30,9 @@ public class ConfluenceSteps extends Pages {
 
 
     @Then("^User should be able to provide a page title \"([^\"]*)\"$")
-    public void userShouldBeAbleToProvideAPageTitle(String pageTitle) throws Throwable {
+    public void userShouldBeAbleToProvideAPageTitle(String title) throws Throwable {
         boolean testResult = false;
-        testResult = confluencePage.createConfluencePageTitle(pageTitle);
+        testResult = confluencePage.createConfluencePageTitle(title);
         if (!testResult) {
             Assert.fail("Could not create the confluence page title");
             SeleniumLib.takeAScreenShot("failedToCreateConfluencePageTitle.jpg");
@@ -128,6 +129,44 @@ public class ConfluenceSteps extends Pages {
         if (!testResult) {
             Assert.fail("Failed to insert the table");
             SeleniumLib.takeAScreenShot("failedToInsertTable.jpg");
+        }
+    }
+
+    @And("^User should be able to click on the Page options displayed on the right corner$")
+    public void userShouldBeAbleToClickOnThePageOptionsDisplayedOnTheRightCorner() throws IOException {
+        boolean testResult = false;
+        testResult = confluencePage.clickOnThePageOptions();
+        if (!testResult) {
+            Assert.fail("Failed to click on the page options");
+            SeleniumLib.takeAScreenShot("failedToClickOptions.jpg");
+        }
+    }
+
+    @Then("^User should be able to export the page into PDF$")
+    public void userShouldBeAbleToExportThePageIntoPDF() throws IOException {
+        boolean testResult = false;
+        testResult = confluencePage.exportToPDF();
+        Assert.assertTrue(testResult);
+        testResult = TestUtils.isFilePresent("", "");
+        Assert.assertTrue(testResult);
+    }
+
+    @Then("^User should be able to export the page into a Word document$")
+    public void userShouldBeAbleToExportThePageIntoAWordDocument() throws IOException {
+        boolean testResult = false;
+        testResult = confluencePage.exportToWord();
+        Assert.assertTrue(testResult);
+        testResult = TestUtils.isFilePresent("", "");
+        Assert.assertTrue(testResult);
+    }
+
+    @And("^User should be able to delete the table$")
+    public void userShouldBeAbleToDeleteTheTable() throws IOException {
+        boolean testResult = false;
+        testResult = confluencePage.deleteTheTable();
+        if (!testResult) {
+            Assert.fail("Failed to delete the table");
+            SeleniumLib.takeAScreenShot("failedToDeleteTable.jpg");
         }
     }
 }
