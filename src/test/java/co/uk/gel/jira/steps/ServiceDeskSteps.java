@@ -58,4 +58,14 @@ public class ServiceDeskSteps extends Pages {
             SeleniumLib.takeAScreenShot("failedToLogoutFromServiceDesk.jpg");
         }
     }
+
+    @Given("^User is logged in to the Service Desk portal Home page$")
+    public void userIsLoggedInToTheServiceDeskPortalHomePage() throws IOException {
+        boolean testResult = false;
+        testResult = serviceDeskPage.loginToHomePage();
+        if (!testResult) {
+            Assert.fail("Could not log into service desk home page");
+            SeleniumLib.takeAScreenShot("failedToNavigateLoginToServiceDesk.jpg");
+        }
+    }
 }

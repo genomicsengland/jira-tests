@@ -21,12 +21,14 @@ public class AppConfig {
     public static String browser;
     public static String device;
     public static RequestSpecification requestSpec;
-    public static String systemDashboard, serviceDesk, confluencePage;
+    public static String systemDashboard, serviceDeskHomePageURL, confluencePage;
     public static String jiraUsername;
     public static String jiraPassword;
     public static String confluenceUsername;
     public static String confluencePassword;
     public static String ticketLink;
+    public static String serviceDeskUsername;
+    public static String serviceDeskPassword;
   /*  private static String appUsername;
     private static String appPassword;*/
 
@@ -37,14 +39,15 @@ public class AppConfig {
         appConfig = loadConfigProperties("AppConfig.properties");
         device = appConfig.getProperty("Device");
         systemDashboard = appConfig.getProperty("APP_URL_SYSTEM_DASHBOARD");
-        serviceDesk = appConfig.getProperty("APP_URL_SERVICE_DESK");
         confluencePage = appConfig.getProperty("APP_URL_CNFL_PAGE");
        jiraUsername =appConfig.getProperty("APP_JIRA_USER_NAME");
        jiraPassword =appConfig.getProperty("APP_JIRA_PASSWORD");
        confluenceUsername=appConfig.getProperty("APP_CONF_USER_NAME");
        confluencePassword=appConfig.getProperty("APP_CONF_PASSWORD");
        ticketLink=appConfig.getProperty("TICKET_LINK");
-
+       serviceDeskUsername=appConfig.getProperty("APP_SD_USER_NAME");
+       serviceDeskPassword=appConfig.getProperty("APP_SD_PASSWORD");
+       serviceDeskHomePageURL=appConfig.getProperty("APP_URL_SERVICE_DESK");
     }
     public static String getDevice() {
         if (device == null) {
