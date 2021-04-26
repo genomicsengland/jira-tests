@@ -169,6 +169,47 @@ public class ConfluenceSteps extends Pages {
             SeleniumLib.takeAScreenShot("failedToDeleteTable.jpg");
         }
     }
+
+    @And("^User should be able to add a simple workflow$")
+    public void userShouldBeAbleToAddASimpleWorkflow() throws IOException {
+        boolean testResult = false;
+        testResult = confluencePage.addWorkflow();
+        if (!testResult) {
+            Assert.fail("Failed to add a workflow");
+            SeleniumLib.takeAScreenShot("failedToAddWorkflow.jpg");
+        }
+    }
+
+    @And("^User should see the workflow status as\"([^\"]*)\"$")
+    public void userShouldSeeTheWorkflowStatusAs(String workflowStatus) throws Throwable {
+        boolean testResult = false;
+        testResult = confluencePage.workflowStatus(workflowStatus);
+        if (!testResult) {
+            Assert.fail("Failed to see the workflow status");
+            SeleniumLib.takeAScreenShot("failedToSeeWorkflowStatus.jpg");
+        }
+    }
+
+
+    @And("^User should be able to change the status as \"([^\"]*)\"$")
+    public void userShouldBeAbleToChangeTheStatusAs(String changeStatus) throws Throwable {
+        boolean testResult = false;
+        testResult = confluencePage.changeWorkflowStatus(changeStatus);
+        if (!testResult) {
+            Assert.fail("Failed to change the workflow status");
+            SeleniumLib.takeAScreenShot("failedToChangeWorkflowStatus.jpg");
+        }
+    }
+
+    @Then("^User should logout from confluence$")
+    public void userShouldLogoutFromConfluence() throws IOException {
+        boolean testResult = false;
+        testResult = confluencePage.logoutFromConfluence();
+        if (!testResult) {
+            Assert.fail("Could not logout from confluence");
+            SeleniumLib.takeAScreenShot("failedToLogoutFromConfluence.jpg");
+        }
+    }
 }
 
 

@@ -90,6 +90,14 @@ public class ConfluencePage {
     @FindBy(xpath = "//button[@class='aui-button aui-button-subtle']/span[@class='icon aui-icon aui-icon-small aui-iconfont-remove-table']")
     public WebElement deleteTableButton;
 
+    @FindBy(xpath = "//a[@id='page-addWorkflow']/span[contains(text(),'Add Workflow...')]")
+    public WebElement addWorkflowButton;
+
+    @FindBy(xpath = "//a[@id='user-menu-link']")
+    public WebElement userOptions;
+
+    @FindBy(xpath = "//a[@id='logout-link']")
+    public WebElement logout;
 
     public ConfluencePage(WebDriver driver) {
         this.driver = driver;
@@ -414,7 +422,9 @@ public class ConfluencePage {
             By table = By.xpath("//iframe[@id='wysiwygTextarea_ifr']");
             driver.switchTo().frame(driver.findElement(table));
             //table[@class='confluenceTable wrapped']/tbody/tr[1]
-            By displayedTable = By.xpath("//table[@class='confluenceTable']/tbody/tr[1]/td[1]");
+            //table[@class='confluenceTable']/tbody/tr[1]/td[1]
+            //body[@id='tinymce']/table/tbody/tr[1]/th[1]
+            By displayedTable = By.xpath("//body[@id='tinymce']/table/tbody/tr[1]");
 
             seleniumLib.isElementPresent(displayedTable);
             seleniumLib.clickOnElement(displayedTable);
@@ -436,6 +446,84 @@ public class ConfluencePage {
         } catch (Exception exp) {
             Debugger.println("Failed to delete the table" + exp);
             SeleniumLib.takeAScreenShot("failedToDeleteTable.jpg");
+            return false;
+        }
+    }
+
+    public boolean addWorkflow() throws IOException {
+        try {
+            addWorkflowButton.click();
+            Wait.seconds(2);
+            By workflowWindow = By.xpath("//iframe[@id='cw-addWorkflowDialog_content_iframe']");
+            driver.switchTo().frame(driver.findElement(workflowWindow));
+            By displayedWorkflowName = By.xpath("//div[@class='WorkflowList_workflowsListContainer__u_26E']/div/section/div[1]/h5[contains(text(),'Simple approval workflow')]");
+            By workflowWindowApplyButton = By.xpath("//div[@class='css-vxcmzt']/div/button[@class='css-1l4j2co']");
+            By successMessage = By.xpath("//div[@id='aui-flag-container']//div[@class='aui-message closeable aui-message-success aui-will-close']");
+
+
+            seleniumLib.isElementPresent(displayedWorkflowName);
+            seleniumLib.clickOnElement(workflowWindowApplyButton);
+            driver.switchTo().parentFrame();
+            driver.switchTo().defaultContent();
+            Wait.seconds(3);
+            seleniumLib.isElementPresent(successMessage);
+            String displayedMessage = seleniumLib.getText(successMessage);
+            Debugger.println("The success message is " + displayedMessage);
+            return true;
+
+        } catch (Exception exp) {
+            Debugger.println("Failed to add a simple workflow" + exp);
+            SeleniumLib.takeAScreenShot("failedToAddWorkflow.jpg");
+            return false;
+        }
+    }
+
+    public boolean workflowStatus(String workflowStatus) throws IOException {
+        try {
+            By workflowStatusLink = By.xpath("//span[@class='cw-byline__description']/a[contains(text(),'" + workflowStatus + "')]");
+            seleniumLib.isElementPresent(workflowStatusLink);
+            String status = seleniumLib.getText(workflowStatusLink);
+            Debugger.println("The status is " + status);
+            seleniumLib.clickOnElement(workflowStatusLink);
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to see the workflow status" + exp);
+            SeleniumLib.takeAScreenShot("failedToSeeWorkflowStatus.jpg");
+            return false;
+        }
+    }
+
+    public boolean changeWorkflowStatus(String changeStatus) throws IOException {
+        try {
+            By reviewWindow = By.xpath("//iframe[@id='cw-state-byline_dialog_iframe_iframe']");
+            driver.switchTo().frame(driver.findElement(reviewWindow));
+            By newStatus = By.xpath("//div[@class='index_buttons__3O9P8']//span[contains(text(),'" + changeStatus + "')]");
+            seleniumLib.isElementPresent(newStatus);
+            seleniumLib.clickOnElement(newStatus);
+            Wait.seconds(2);
+            driver.switchTo().parentFrame();
+            driver.switchTo().defaultContent();
+            return true;
+
+        } catch (Exception exp) {
+            Debugger.println("Failed to change the workflow status" + exp);
+            SeleniumLib.takeAScreenShot("failedToChangeWorkflowStatus.jpg");
+            return false;
+        }
+    }
+
+    public boolean logoutFromConfluence() {
+        try {
+          userOptions.isDisplayed();
+          userOptions.click();
+          Wait.seconds(2);
+          logout.isDisplayed();
+          logout.click();
+            Debugger.println("Logged out successfully");
+            return true;
+
+        } catch (Exception exp) {
+            Debugger.println("Failed to logout");
             return false;
         }
     }
