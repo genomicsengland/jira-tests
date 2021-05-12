@@ -166,10 +166,10 @@ public class JiraSteps extends Pages {
         }
     }
 
-    @And("^User should be able to able to update the workflow as \"([^\"]*)\"$")
-    public void userShouldBeAbleToAbleToUpdateTheWorkflowAs(String workflow) throws Throwable {
+    @And("^User should be able to update the workflow as \"([^\"]*)\"$")
+    public void userShouldBeAbleToUpdateTheWorkflowAs(String workflow) throws Throwable {
         boolean testResult = false;
-        testResult = jiraPage.clickOnTheWorkflow(workflow);
+        testResult = jiraPage.updateTheWorkflow(workflow);
         if (!testResult) {
             Assert.fail("Incorrect ticket workflow");
             SeleniumLib.takeAScreenShot("incorrectTicketWorkflow.jpg");

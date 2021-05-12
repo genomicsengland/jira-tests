@@ -66,6 +66,9 @@ public class JiraPage {
     @FindBy(xpath = "//h4[contains(text(),'Test Executions')]")
     public WebElement testExecutionTitle;
 
+    @FindBy(xpath = "//span[contains(text(),'Workflow')]")
+    public WebElement workFlowDropDown;
+
 
     private By createIssueTitle = By.xpath("//h2[contains(text(),'Create Issue')]");
 
@@ -176,14 +179,10 @@ public class JiraPage {
 
     public boolean enterTheSummary(String value) throws IOException {
         try {
-
-            summary.click();
-            summary.sendKeys(Keys.BACK_SPACE);
             Wait.seconds(2);
             int randomNumber = seleniumLib.getRandomNumber();
             value = value + "_" + randomNumber;
             summary.sendKeys(value);
-            summary.sendKeys(Keys.ENTER);
             Wait.seconds(2);
             System.out.println("the summary of the ticket is " + value);
             Debugger.println("The Summary is provided as " + value);
@@ -235,27 +234,21 @@ public class JiraPage {
 
     public boolean enterTheDescription(String value) throws IOException {
         try {
-
-            description.click();
-            description.sendKeys(Keys.BACK_SPACE);
             Wait.seconds(5);
             description.sendKeys(value);
-            description.sendKeys(Keys.ENTER);
             Wait.seconds(5);
             System.out.println("the description of the ticket is " + value);
             Debugger.println("The Description is provided");
             return true;
         } catch (Exception exp) {
-            Debugger.println("Exception in enteringTheDescription: " + exp);
+            Debugger.println("Exception in entering The Description: " + exp);
             SeleniumLib.takeAScreenShot("description.jpg");
             return false;
-
         }
     }
 
     public boolean selectPriority(String value) throws IOException {
         try {
-
             priority.click();
             priority.sendKeys(Keys.BACK_SPACE);
             Wait.seconds(5);
@@ -350,11 +343,19 @@ public class JiraPage {
     }
 
 
-    public boolean clickOnTheWorkflow(String workflow) throws IOException {
+    public boolean updateTheWorkflow(String workflow) throws IOException {
         try {
-            By workflowButton = By.xpath("//span[contains(text(),'" + workflow + "')]");
-            WebElement workflowButton1 = driver.findElement(workflowButton);
-            workflowButton1.click();
+            if (seleniumLib.isElementPresent(workFlowDropDown)) {
+                workFlowDropDown.click();
+                By workflowButton = By.xpath("//span[contains(text(),'" + workflow + "')]");
+                WebElement workflowButton1 = driver.findElement(workflowButton);
+                workflowButton1.click();
+            }
+            else{
+                By workflowButton = By.xpath("//span[contains(text(),'" + workflow + "')]");
+                WebElement workflowButton1 = driver.findElement(workflowButton);
+                workflowButton1.click();
+            }
             Wait.seconds(3);
             return true;
         } catch (Exception exp) {
