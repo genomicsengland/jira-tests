@@ -3,6 +3,9 @@ package co.uk.gel.jira.steps;
 import co.uk.gel.config.SeleniumDriver;
 import co.uk.gel.jira.pages.Pages;
 import co.uk.gel.lib.SeleniumLib;
+
+
+import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -10,6 +13,7 @@ import cucumber.api.java.en.Then;
 import org.junit.Assert;
 
 import java.io.IOException;
+import java.util.List;
 
 public class JiraSteps extends Pages {
 
@@ -163,13 +167,63 @@ public class JiraSteps extends Pages {
         }
     }
 
-    @And("^User should be able to able to update the workflow as \"([^\"]*)\"$")
-    public void userShouldBeAbleToAbleToUpdateTheWorkflowAs(String workflow) throws Throwable {
+    @And("^User should be able to update the workflow as \"([^\"]*)\"$")
+    public void userShouldBeAbleToUpdateTheWorkflowAs(String workflow) throws Throwable {
         boolean testResult = false;
-        testResult = jiraPage.clickOnTheWorkflow(workflow);
+        testResult = jiraPage.updateTheWorkflow(workflow);
         if (!testResult) {
             Assert.fail("Incorrect ticket workflow");
             SeleniumLib.takeAScreenShot("incorrectTicketWorkflow.jpg");
+        }
+    }
+
+    @And("^User should be able to see the test execution area$")
+    public void userShouldBeAbleToSeeTheTestExecutionArea(DataTable columnNames) throws IOException {
+        boolean testResult = false;
+        List<List<String>> testExecutionPlaceholder = columnNames.raw();
+        for (int i = 0; i < testExecutionPlaceholder.size(); i++) {
+            String options = testExecutionPlaceholder.get(i).get(0);
+            testResult = jiraPage.testExecution(options);
+            if (!testResult) {
+                Assert.fail("Test execution not found");
+                SeleniumLib.takeAScreenShot("testExecutionNotFound.jpg");
+            }
+        }
+    }
+
+    @And("^User should access the link$")
+    public void userShouldAccessTheLink() {
+        boolean testResult = false;
+        testResult = jiraPage.ticketLink();
+        if (!testResult) {
+            Assert.fail("ticket link not found");
+        }
+    }
+
+    @And("^User should be able to see ticket type as \"([^\"]*)\"$")
+    public void userShouldBeAbleToSeeTicketTypeAs(String ticketType) throws IOException {
+        boolean testResult = false;
+        testResult = jiraPage.verifyTicketType(ticketType);
+        if (!testResult) {
+            Assert.fail("ticket type not found");
+        }
+    }
+
+    @And("^User should be able to see ticket priority as \"([^\"]*)\"$")
+    public void userShouldBeAbleToSeeTicketPriorityAs(String priority) throws IOException {
+        boolean testResult = false;
+        testResult = jiraPage.verifyPriority(priority);
+        if (!testResult) {
+            Assert.fail("priority not found");
+        }
+    }
+
+    @And("^User should be able to see ticket description as \"([^\"]*)\"$")
+    public void userShouldBeAbleToSeeTicketDescriptionAs(String description) throws Throwable {
+        boolean testResult = false;
+        testResult = jiraPage.verifyDescription(description);
+        if (!testResult) {
+            Assert.fail("priority not found");
         }
     }
 }
