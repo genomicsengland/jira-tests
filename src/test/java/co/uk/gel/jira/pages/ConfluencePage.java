@@ -39,7 +39,7 @@ public class ConfluencePage {
     @FindBy(xpath = "//input[@id='content-title']")
     public WebElement pageTitle;
 
-    @FindBy(xpath = "//a[@class='all-spaces-link']")
+    @FindBy(xpath = "//a[@id='space-menu-link']")
     public WebElement allSpacesLink;
 
 
@@ -165,9 +165,13 @@ public class ConfluencePage {
 
     public boolean allSpaces() throws IOException {
         try {
-            allSpacesLink.isDisplayed();
-            allSpacesLink.click();
-            Debugger.println("Clicked on the All spaces link");
+            if (allSpacesLink.isDisplayed()){
+                allSpacesLink.click();
+                Debugger.println("Clicked on the spaces dropdown");
+            }
+            WebElement spaceDirectory = driver.findElement(By.xpath("//a[@id='view-all-spaces-link']"));
+            spaceDirectory.click();
+            Debugger.println("Clicked on the space directory");
             return true;
         } catch (Exception exp) {
             Debugger.println("All spaces link not found" + exp);
