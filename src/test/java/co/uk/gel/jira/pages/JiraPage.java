@@ -69,6 +69,14 @@ public class JiraPage {
     @FindBy(xpath = "//span[contains(text(),'Workflow')]")
     public WebElement workFlowDropDown;
 
+    @FindBy(xpath = "//span[@id='type-val']")
+    public WebElement ticketType;
+
+    @FindBy(xpath = "//span[@id='priority-val']")
+    public WebElement ticketPriority;
+
+    @FindBy(xpath = "//div[@id='description-val']//p")
+    public WebElement ticketDescription;
 
     private By createIssueTitle = By.xpath("//h2[contains(text(),'Create Issue')]");
 
@@ -398,6 +406,63 @@ public class JiraPage {
             return true;
         } catch (Exception exp) {
             Debugger.println("Failed to check the ticket link");
+            return false;
+        }
+    }
+
+    public boolean verifyTicketType(String expTicketType) throws IOException {
+        try {
+            String actualTicketType = ticketType.getText();
+            Wait.seconds(2);
+            if (!actualTicketType.equalsIgnoreCase(expTicketType)) {
+                Debugger.println("The actual type- " + actualTicketType + " is not matching with the expected type- " + expTicketType);
+                SeleniumLib.takeAScreenShot("actualAndExpectedTypeMismatch.jpg");
+                return false;
+            }else{
+                Debugger.println("The actual type- " + actualTicketType + " matched with the expected type- " + expTicketType);
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to verify the the ticket type");
+            SeleniumLib.takeAScreenShot("actualAndExpectedTypeMismatch.jpg");
+            return false;
+        }
+    }
+
+    public boolean verifyPriority(String expPriority) throws IOException {
+        try {
+            String actualPriority = ticketPriority.getText();
+            Wait.seconds(2);
+            if (!actualPriority.equalsIgnoreCase(expPriority)) {
+                Debugger.println("The actual priority- " + actualPriority + " is not matching with the expected priority- " + expPriority);
+                SeleniumLib.takeAScreenShot("actualAndExpectedPriorityMismatch.jpg");
+                return false;
+            }else{
+                Debugger.println("The actual priority- " + actualPriority + " matched with the expected priority- " + expPriority);
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to verify the the ticket priority");
+            SeleniumLib.takeAScreenShot("actualAndExpectedPriorityMismatch.jpg");
+            return false;
+        }
+    }
+
+    public boolean verifyDescription(String expDescription) throws IOException {
+        try {
+            String actualDescription = ticketDescription.getText();
+            Wait.seconds(2);
+            if (!actualDescription.equalsIgnoreCase(expDescription)) {
+                Debugger.println("The actual description- " + actualDescription + " is not matching with the expected description- " + expDescription);
+                SeleniumLib.takeAScreenShot("actualAndExpectedDescriptionMismatch.jpg");
+                return false;
+            }else{
+                Debugger.println("The actual description- " + actualDescription + " matched with the expected description- " + expDescription);
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to verify the the ticket description");
+            SeleniumLib.takeAScreenShot("actualAndExpectedDescriptionMismatch.jpg");
             return false;
         }
     }

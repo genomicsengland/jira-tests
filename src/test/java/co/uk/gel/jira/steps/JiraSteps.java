@@ -6,6 +6,7 @@ import co.uk.gel.lib.SeleniumLib;
 
 
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -196,6 +197,33 @@ public class JiraSteps extends Pages {
         testResult = jiraPage.ticketLink();
         if (!testResult) {
             Assert.fail("ticket link not found");
+        }
+    }
+
+    @And("^User should be able to see ticket type as \"([^\"]*)\"$")
+    public void userShouldBeAbleToSeeTicketTypeAs(String ticketType) throws IOException {
+        boolean testResult = false;
+        testResult = jiraPage.verifyTicketType(ticketType);
+        if (!testResult) {
+            Assert.fail("ticket type not found");
+        }
+    }
+
+    @And("^User should be able to see ticket priority as \"([^\"]*)\"$")
+    public void userShouldBeAbleToSeeTicketPriorityAs(String priority) throws IOException {
+        boolean testResult = false;
+        testResult = jiraPage.verifyPriority(priority);
+        if (!testResult) {
+            Assert.fail("priority not found");
+        }
+    }
+
+    @And("^User should be able to see ticket description as \"([^\"]*)\"$")
+    public void userShouldBeAbleToSeeTicketDescriptionAs(String description) throws Throwable {
+        boolean testResult = false;
+        testResult = jiraPage.verifyDescription(description);
+        if (!testResult) {
+            Assert.fail("priority not found");
         }
     }
 }
