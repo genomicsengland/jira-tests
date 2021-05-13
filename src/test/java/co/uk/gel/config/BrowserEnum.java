@@ -5,5 +5,6 @@ public enum BrowserEnum {
 	CHROME,
 	IE,
 	SAFARI,
+	EDGE
 
 }

@@ -4,7 +4,6 @@ import co.uk.gel.jira.config.AppConfig;
 import co.uk.gel.jira.util.Debugger;
 import co.uk.gel.lib.SeleniumLib;
 import co.uk.gel.lib.Wait;
-import gherkin.lexer.De;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -61,6 +60,23 @@ public class JiraPage {
     @FindBy(xpath = "//span[@id='status-val']")
     public WebElement ticketStatus;
 
+    @FindBy(xpath = "(//div[@id='unfreezedGridHeader'])[2]")
+    public WebElement testExecutionPlaceHolder;
+
+    @FindBy(xpath = "//h4[contains(text(),'Test Executions')]")
+    public WebElement testExecutionTitle;
+
+    @FindBy(xpath = "//span[contains(text(),'Workflow')]")
+    public WebElement workFlowDropDown;
+
+    @FindBy(xpath = "//span[@id='type-val']")
+    public WebElement ticketType;
+
+    @FindBy(xpath = "//span[@id='priority-val']")
+    public WebElement ticketPriority;
+
+    @FindBy(xpath = "//div[@id='description-val']//p")
+    public WebElement ticketDescription;
 
     private By createIssueTitle = By.xpath("//h2[contains(text(),'Create Issue')]");
 
@@ -124,7 +140,7 @@ public class JiraPage {
             return true;
         } catch (Exception exp) {
             Debugger.println("Failed to open the create issue window");
-            SeleniumLib.takeAScreenShot("createIssueWindowOpened.jpg");
+            SeleniumLib.takeAScreenShot("createIssueWindowNotOpened.jpg");
             return false;
         }
     }
@@ -171,14 +187,10 @@ public class JiraPage {
 
     public boolean enterTheSummary(String value) throws IOException {
         try {
-
-            summary.click();
-            summary.sendKeys(Keys.BACK_SPACE);
             Wait.seconds(2);
             int randomNumber = seleniumLib.getRandomNumber();
             value = value + "_" + randomNumber;
             summary.sendKeys(value);
-            summary.sendKeys(Keys.ENTER);
             Wait.seconds(2);
             System.out.println("the summary of the ticket is " + value);
             Debugger.println("The Summary is provided as " + value);
@@ -230,27 +242,21 @@ public class JiraPage {
 
     public boolean enterTheDescription(String value) throws IOException {
         try {
-
-            description.click();
-            description.sendKeys(Keys.BACK_SPACE);
             Wait.seconds(5);
             description.sendKeys(value);
-            description.sendKeys(Keys.ENTER);
             Wait.seconds(5);
             System.out.println("the description of the ticket is " + value);
             Debugger.println("The Description is provided");
             return true;
         } catch (Exception exp) {
-            Debugger.println("Exception in enteringTheDescription: " + exp);
+            Debugger.println("Exception in entering The Description: " + exp);
             SeleniumLib.takeAScreenShot("description.jpg");
             return false;
-
         }
     }
 
     public boolean selectPriority(String value) throws IOException {
         try {
-
             priority.click();
             priority.sendKeys(Keys.BACK_SPACE);
             Wait.seconds(5);
@@ -330,7 +336,7 @@ public class JiraPage {
     public boolean ticketStatus(String expectedStatus) throws IOException {
         try {
             String actualStatus = ticketStatus.getText();
-           Wait.seconds(2);
+            Wait.seconds(2);
             if (!actualStatus.equalsIgnoreCase(expectedStatus)) {
                 Debugger.println("The actual status is not matching with the expected status");
                 SeleniumLib.takeAScreenShot("actualAndExpectedStatusMismatch.jpg");
@@ -345,13 +351,21 @@ public class JiraPage {
     }
 
 
-    public boolean clickOnTheWorkflow(String workflow) throws IOException {
+    public boolean updateTheWorkflow(String workflow) throws IOException {
         try {
-            By workflowButton = By.xpath("//span[contains(text(),'"+workflow+"')]");
-            WebElement workflowButton1 = driver.findElement(workflowButton);
-            workflowButton1.click();
+            if (seleniumLib.isElementPresent(workFlowDropDown)) {
+                workFlowDropDown.click();
+                By workflowButton = By.xpath("//span[contains(text(),'" + workflow + "')]");
+                WebElement workflowButton1 = driver.findElement(workflowButton);
+                workflowButton1.click();
+            }
+            else{
+                By workflowButton = By.xpath("//span[contains(text(),'" + workflow + "')]");
+                WebElement workflowButton1 = driver.findElement(workflowButton);
+                workflowButton1.click();
+            }
             Wait.seconds(3);
-return true;
+            return true;
         } catch (Exception exp) {
             Debugger.println("Failed to check the ticket status");
             SeleniumLib.takeAScreenShot("ticketStatus.jpg");
@@ -359,6 +373,99 @@ return true;
         }
     }
 
+    public boolean testExecution(String options) {
+        try {
+            testExecutionTitle.isDisplayed();
+            String columnNames = testExecutionPlaceHolder.getText();
+            String[] optionName = columnNames.split("\n");
+            Wait.seconds(2);
+            boolean isPresent = false;
+            for (int i = 0; i < optionName.length; i++) {
+                Debugger.println("The column names are " + optionName[i]);
+                if (optionName[i].equalsIgnoreCase(options)) {
+                    Debugger.println("The column names are matching with the provided options");
+                    isPresent = true;
+                    break;
+                }
+            }
+            if (!isPresent) {
+                Debugger.println("The options are not matching");
+                return false;
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to check the test execution column names");
+            return false;
+        }
+    }
+
+    public boolean ticketLink() {
+        try {
+            driver.get(AppConfig.ticketLink);
+            Wait.seconds(2);
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to check the ticket link");
+            return false;
+        }
+    }
+
+    public boolean verifyTicketType(String expTicketType) throws IOException {
+        try {
+            String actualTicketType = ticketType.getText();
+            Wait.seconds(2);
+            if (!actualTicketType.equalsIgnoreCase(expTicketType)) {
+                Debugger.println("The actual type- " + actualTicketType + " is not matching with the expected type- " + expTicketType);
+                SeleniumLib.takeAScreenShot("actualAndExpectedTypeMismatch.jpg");
+                return false;
+            }else{
+                Debugger.println("The actual type- " + actualTicketType + " matched with the expected type- " + expTicketType);
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to verify the the ticket type");
+            SeleniumLib.takeAScreenShot("actualAndExpectedTypeMismatch.jpg");
+            return false;
+        }
+    }
+
+    public boolean verifyPriority(String expPriority) throws IOException {
+        try {
+            String actualPriority = ticketPriority.getText();
+            Wait.seconds(2);
+            if (!actualPriority.equalsIgnoreCase(expPriority)) {
+                Debugger.println("The actual priority- " + actualPriority + " is not matching with the expected priority- " + expPriority);
+                SeleniumLib.takeAScreenShot("actualAndExpectedPriorityMismatch.jpg");
+                return false;
+            }else{
+                Debugger.println("The actual priority- " + actualPriority + " matched with the expected priority- " + expPriority);
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to verify the the ticket priority");
+            SeleniumLib.takeAScreenShot("actualAndExpectedPriorityMismatch.jpg");
+            return false;
+        }
+    }
+
+    public boolean verifyDescription(String expDescription) throws IOException {
+        try {
+            String actualDescription = ticketDescription.getText();
+            Wait.seconds(2);
+            if (!actualDescription.equalsIgnoreCase(expDescription)) {
+                Debugger.println("The actual description- " + actualDescription + " is not matching with the expected description- " + expDescription);
+                SeleniumLib.takeAScreenShot("actualAndExpectedDescriptionMismatch.jpg");
+                return false;
+            }else{
+                Debugger.println("The actual description- " + actualDescription + " matched with the expected description- " + expDescription);
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to verify the the ticket description");
+            SeleniumLib.takeAScreenShot("actualAndExpectedDescriptionMismatch.jpg");
+            return false;
+        }
+    }
 }//end class
 
 

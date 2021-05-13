@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.*;
+
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
@@ -22,14 +23,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-
 public class SeleniumLib {
     private static WebDriver driver;
     private static boolean HIGHLIGHT = true;
     private static WebElement webElement = null;
     private String strtext;
     public static String ParentWindowID = null;
-    public static String cancerScreenshotLocation = System.getProperty("user.dir") + File.separator + "Screenshot"+ File.separator + "Cancer" + File.separator;
+    public static String cancerScreenshotLocation = System.getProperty("user.dir") + File.separator + "Screenshot" + File.separator + "Cancer" + File.separator;
     public static String rdScreenshotLocation = System.getProperty("user.dir") + File.separator + "Screenshot" + File.separator + "RareDisease" + File.separator;
     static String ScreenshotLocation = System.getProperty("user.dir") + File.separator + "Screenshot" + File.separator;
 
@@ -58,7 +58,6 @@ public class SeleniumLib {
     }
 
     /**
-     *
      * @param element
      * @return
      */
@@ -73,7 +72,6 @@ public class SeleniumLib {
     }
 
     /**
-     *
      * @param element
      */
     public static void elementHighlight(WebElement element) {
@@ -88,28 +86,28 @@ public class SeleniumLib {
     }
 
     /**
-     *
      * @param element
      */
     public void clickOnElement(By element) {
         try {
             WebElement webele = getElement(element);
-            if(webele != null){
+            if (webele != null) {
                 webele.click();
-            }else{
+            } else {
                 Actions actions = new Actions(driver);
                 actions.moveToElement(driver.findElement(element)).click().perform();
             }
-        }catch (Exception exp) {
+        } catch (Exception exp) {
             try {
                 Actions actions = new Actions(driver);
                 actions.moveToElement(driver.findElement(element)).click().perform();
-            }catch(Exception exp1){
-                Debugger.println("Exception : SeleniumLib.clickOnElement: "+element.toString()+"\n"+exp1);
+            } catch (Exception exp1) {
+                Debugger.println("Exception : SeleniumLib.clickOnElement: " + element.toString() + "\n" + exp1);
                 throw exp1;
             }
         }
     }
+
     public List<WebElement> getElements(By ele) {
         try {
             waitForElementVisible(driver.findElement(ele));
@@ -134,7 +132,7 @@ public class SeleniumLib {
             webElement = getWebElement(element);
             webElement.clear();
             webElement.sendKeys(value);
-        }catch (NoSuchElementException J) {
+        } catch (NoSuchElementException J) {
             throw new NoSuchElementException(timeoutErrorMessage(element) + J);
         }
     }
@@ -148,18 +146,18 @@ public class SeleniumLib {
         } catch (NoSuchElementException e) {
             Debugger.println("element not found  " + element);
             boolean throwExp = true;
-            try{
+            try {
                 Select select = new Select(webElement);
                 List<WebElement> options = select.getOptions();
                 for (WebElement option : options) {
-                    String originalText = text.trim().replace(" ","").replace(" ","").toLowerCase();
-                    String expectedString = option.getText().trim().replace(" ","").toLowerCase();
-                    if(originalText.equalsIgnoreCase(expectedString)){
+                    String originalText = text.trim().replace(" ", "").replace(" ", "").toLowerCase();
+                    String expectedString = option.getText().trim().replace(" ", "").toLowerCase();
+                    if (originalText.equalsIgnoreCase(expectedString)) {
                         select.selectByVisibleText(option.getText());
                         return;
                     }
                 }
-            }catch(Exception exp){
+            } catch (Exception exp) {
                 throw exp;
             }
         }
@@ -190,16 +188,17 @@ public class SeleniumLib {
     public static void refreshPage() {
         driver.navigate().refresh();
     }
+
     public static boolean IsDisplayed(By element) {
         try {
             webElement = getWebElement(element);
-            if(webElement == null){
+            if (webElement == null) {
                 return false;
             }
             elementHighlight(webElement);
             return webElement.isDisplayed();
         } catch (Exception exp) {
-            Debugger.println("Element not Displayed......"+exp+"\nElement..."+element);
+            Debugger.println("Element not Displayed......" + exp + "\nElement..." + element);
             return false;
         }
     }
@@ -207,7 +206,7 @@ public class SeleniumLib {
     public boolean isElementPresent(By element) {
         try {
             webElement = getWebElement(element);
-            if(webElement == null){
+            if (webElement == null) {
                 return false;
             }
             elementHighlight(webElement);
@@ -218,6 +217,7 @@ public class SeleniumLib {
             return false;
         }
     }
+
     @SuppressWarnings("deprecation")
     public boolean isElementPresent(WebElement element) {
         try {
@@ -249,7 +249,6 @@ public class SeleniumLib {
     }
 
     /**
-     *
      * @param element
      * @return
      */
@@ -266,7 +265,6 @@ public class SeleniumLib {
     }
 
     /**
-     *
      * @param element
      */
     public boolean JavaScriptClick(By element) {
@@ -274,7 +272,7 @@ public class SeleniumLib {
         try {
             webElement = getWebElement(element);
             // DAMSDebugger.println("Time2............"+System.currentTimeMillis()/1000+".."+webElement);
-            if(webElement == null){
+            if (webElement == null) {
                 return false;
             }
             //DAMSDebugger.println("Time3............"+System.currentTimeMillis()/1000);
@@ -285,7 +283,7 @@ public class SeleniumLib {
             //DAMSDebugger.println("Time5............"+System.currentTimeMillis()/1000);
             return true;
         } catch (Exception exp) {
-            Debugger.println("Exception: SeleniumLib: Javascript Click.."+exp);
+            Debugger.println("Exception: SeleniumLib: Javascript Click.." + exp);
             return false;
         }
     }
@@ -294,19 +292,18 @@ public class SeleniumLib {
         try {
             WebElement element = new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(by));
             return element;
-        }catch(Exception exp){
-            return  null;
+        } catch (Exception exp) {
+            return null;
         }
     }
 
     /**
-     *
      * @param element
      * @return
      */
     public String getText(By element) {
         try {
-            webElement =  waitForElementVisible(element);
+            webElement = waitForElementVisible(element);
             elementHighlight(webElement);
             strtext = webElement.getText().trim();
             return "" + strtext;
@@ -317,7 +314,6 @@ public class SeleniumLib {
     }
 
     /**
-     *
      * @param i
      */
     public static void sleep(int i) {
@@ -330,7 +326,7 @@ public class SeleniumLib {
 
     public static void sleepInMinute(int i) {
         try {
-            Thread.sleep(i * 1000*60);
+            Thread.sleep(i * 1000 * 60);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -344,10 +340,10 @@ public class SeleniumLib {
         }
     }
 
-    public void focusElement(By element){
+    public void focusElement(By element) {
         webElement = getElement(element);
         JavascriptExecutor javascript = (JavascriptExecutor) driver;
-        javascript.executeScript("arguments[0].focus();",webElement);
+        javascript.executeScript("arguments[0].focus();", webElement);
     }
 
     public void waitForAjax(int timeoutInSeconds) {
@@ -371,7 +367,7 @@ public class SeleniumLib {
                 Debugger.println("Web driver: " + driver + " cannot execute javascript");
             }
         } catch (InterruptedException e) {
-           Debugger.println("Ajax wait Exception  " + e);
+            Debugger.println("Ajax wait Exception  " + e);
         }
     }
 
@@ -386,78 +382,83 @@ public class SeleniumLib {
                 driver.switchTo().window(window);
             }
             return true;
-        } catch(Exception exp) {
+        } catch (Exception exp) {
             Debugger.println("Exception while switching window: " + exp);
             return false;
         }
     }
-    public static boolean closeCurrentWindow(){
+
+    public static boolean closeCurrentWindow() {
         try {
             ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-            Debugger.println("Closing Current Window: "+tabs.size());
+            Debugger.println("Closing Current Window: " + tabs.size());
             String title = driver.getTitle();
-            Debugger.println("Title: "+title+"::");
-            if(title == null || title.isEmpty()){
+            Debugger.println("Title: " + title + "::");
+            if (title == null || title.isEmpty()) {
                 driver.switchTo().window(tabs.get(0));
                 return true;
             }
-            if(tabs.size() > 1) {
+            if (tabs.size() > 1) {
                 driver.switchTo().window(tabs.get(1));
                 JavascriptExecutor js = (JavascriptExecutor) driver;
                 js.executeScript("window.close()");
             }
             driver.switchTo().window(tabs.get(0));
             return true;
-        }catch(Exception exp){
+        } catch (Exception exp) {
 //           takeAScreenShot("WindowCloseException.jpg");
-           return false;
+            return false;
         }
     }
-    public static boolean removeExtraTab(){
+
+    public static boolean removeExtraTab() {
         try {
             Debugger.println("Removing Extra Tab....");
             ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-            if(tabs.size() > 1) {
+            if (tabs.size() > 1) {
                 driver.switchTo().window(tabs.get(1));
                 JavascriptExecutor js = (JavascriptExecutor) driver;
                 js.executeScript("window.close()");
             }
             driver.switchTo().window(tabs.get(0));
             return true;
-        }catch(Exception exp){
+        } catch (Exception exp) {
             return false;
         }
     }
-    public static boolean switchToFirstTab(){
+
+    public static boolean switchToFirstTab() {
         try {
             ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-            if(tabs.size() > 1) {
+            if (tabs.size() > 1) {
                 driver.switchTo().window(tabs.get(0));
             }
             return true;
-        }catch(Exception exp){
+        } catch (Exception exp) {
             return false;
         }
     }
-    public static boolean switchToSecondTab(){
+
+    public static boolean switchToSecondTab() {
         try {
             ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-            if(tabs.size() > 1) {
+            if (tabs.size() > 1) {
                 driver.switchTo().window(tabs.get(1));
             }
             return true;
-        }catch(Exception exp){
+        } catch (Exception exp) {
             return false;
         }
     }
+
     /**
      *
      */
     public static void ChangeToParentWindow() {
         try {
             driver.switchTo().window(ParentWindowID);
-        }catch(Exception exp){
-            Debugger.println("Exception from Changing to Parent..........."+exp);
+        } catch (Exception exp) {
+            Debugger.println("Exception from Changing to Parent..........." + exp);
         }
     }
 
@@ -486,7 +487,7 @@ public class SeleniumLib {
         }
         sleep(2);
         element = new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.id("file")));
-        if(element != null) {
+        if (element != null) {
             element.click();
         }
         sleep(2);
@@ -517,7 +518,7 @@ public class SeleniumLib {
             return true;
         } catch (Exception exp) {
             // TODO Auto-generated catch block
-            Debugger.println("Upload Exception from SeleniumLib: "+exp);
+            Debugger.println("Upload Exception from SeleniumLib: " + exp);
             return false;
         }
     }
@@ -543,7 +544,7 @@ public class SeleniumLib {
 
     public static boolean isTextPresent(String text) {
         try {
-            if(text == null){
+            if (text == null) {
                 return false;
             }
             return getVisibleText().contains(text);
@@ -553,7 +554,6 @@ public class SeleniumLib {
     }
 
     /**
-     *
      * @return
      */
     public static String getVisibleText() {
@@ -572,8 +572,8 @@ public class SeleniumLib {
             WebElement we = driver.findElement(element);
             action.moveToElement(we).build().perform();
             return "Success";
-        }catch(Exception exp){
-            return "Exception in clicking on Element:"+element.toString()+",EXP:"+exp;
+        } catch (Exception exp) {
+            return "Exception in clicking on Element:" + element.toString() + ",EXP:" + exp;
         }
     }
 
@@ -620,18 +620,19 @@ public class SeleniumLib {
         }
     }
 
-    public static void clearCookies(){
+    public static void clearCookies() {
         driver.manage().deleteAllCookies();
     }
+
     public static void reInitializeDriver() {
         System.setProperty("webdriver.chrome.driver",
                 System.getProperty("user.dir") + File.separator + "drivers/chromedriver.exe");
 
-        driver =  new ChromeDriver(getChromeOptions(null, true));
+        driver = new ChromeDriver(getChromeOptions(null, true));
     }
 
     static ChromeOptions getChromeOptions(String userAgent,
-                                           boolean javascriptEnabled) {
+                                          boolean javascriptEnabled) {
         ChromeOptions opts = new ChromeOptions();
         if (null != userAgent) {
             opts.addArguments("user-agent=" + userAgent);
@@ -648,39 +649,41 @@ public class SeleniumLib {
     }
 
     public int getColumnIndex(By TableHeading, String column_name) {
-        List<WebElement> Headings =  getHeadingElements(TableHeading);
-        if(Headings == null || Headings.size() == 0){
+        List<WebElement> Headings = getHeadingElements(TableHeading);
+        if (Headings == null || Headings.size() == 0) {
             return -1;
         }
         String heading_name = "";
         for (int index = 0; index < Headings.size(); index++) {
             heading_name = Headings.get(index).getText();
-            if(column_name.equalsIgnoreCase(heading_name)) {
+            if (column_name.equalsIgnoreCase(heading_name)) {
                 return index + 1;
             }
         }
         return -1;
     }
 
-    public int getWindowWidth(){
+    public int getWindowWidth() {
         return driver.manage().window().getSize().getWidth();
     }
 
-    public void acceptAlert(){
-        if(isAlertPresent()){
+    public void acceptAlert() {
+        if (isAlertPresent()) {
             driver.switchTo().alert().accept();
         }
     }
-    public void dismissAlert(){
-        if(isAlertPresent()){
+
+    public void dismissAlert() {
+        if (isAlertPresent()) {
             driver.switchTo().alert().dismiss();
         }
     }
-    private boolean isAlertPresent(){
-        try{
+
+    private boolean isAlertPresent() {
+        try {
             driver.switchTo().alert();
             return true;
-        }catch(NoAlertPresentException ex){
+        } catch (NoAlertPresentException ex) {
             return false;
         }
     }
@@ -694,14 +697,15 @@ public class SeleniumLib {
     public void moveMouseAndClickOnElement(By element) {
         Actions action = new Actions(driver);
         WebElement we = driver.findElement(element);
-        if(we == null){
+        if (we == null) {
             return;
         }
         action.click(we).build().perform();
     }
+
     public void moveMouseAndClickOnWebElement(WebElement element) {
         Actions action = new Actions(driver);
-        if(element == null){
+        if (element == null) {
             return;
         }
         action.moveToElement(element).build().perform();
@@ -710,34 +714,68 @@ public class SeleniumLib {
     }
 
     public static void takeAScreenShot(String filename) throws IOException {
-        try{
-            if(filename == null || filename.isEmpty()){
+        try {
+            if (filename == null || filename.isEmpty()) {
                 filename = "screenshot";
             }
-            if(filename.indexOf(".") == -1){
-                filename = filename+".jpg";
+            if (filename.indexOf(".") == -1) {
+                filename = filename + ".jpg";
             }
 
             File snapLocation = new File(ScreenshotLocation);
-            if(!snapLocation.exists()){
+            if (!snapLocation.exists()) {
                 snapLocation.mkdirs();
             }
             //Debugger.println("ScreenShotFile:"+filename);
             File screenshot = ((TakesScreenshot) driver)
                     .getScreenshotAs(OutputType.FILE);
 
-            FileUtils.copyFile(screenshot, new File(ScreenshotLocation+filename));
+            FileUtils.copyFile(screenshot, new File(ScreenshotLocation + filename));
 
-        }catch(Exception exp){
+        } catch (Exception exp) {
 
         }
 
-}
+    }
+
     public static int getRandomNumber() {
         Random rand = new Random();
 
         // Generate random integers in range 0 to 999
-        int rand_int = rand.nextInt(99);
-    return rand_int;
+        int rand_int = rand.nextInt(999);
+        return rand_int;
+    }
+
+    public void scrollToElement(WebElement element) {
+        try {
+            if (element == null) {
+                return;
+            }
+            Point location = element.getLocation();
+            String script = "scroll(" + location.x + "," + (location.y - 120) + ")";
+            JavascriptExecutor executor = (JavascriptExecutor) driver;
+            executor.executeScript(script);
+        } catch (Exception e) {
+        }
+    }
+
+    public void clickOnWebElement(WebElement element) {
+        try {
+
+            if (element != null) {
+                element.click();
+            } else {
+                Actions actions = new Actions(driver);
+                actions.moveToElement(element).click().perform();
+            }
+        } catch (Exception exp) {
+            try {
+                Actions actions = new Actions(driver);
+                actions.moveToElement(element).click().perform();
+            } catch (Exception exp1) {
+                Debugger.println("Exception : SeleniumLib.clickOnElement: " + element.toString() + "\n" + exp1);
+                throw exp1;
+            }
+        }
     }
 }//end
