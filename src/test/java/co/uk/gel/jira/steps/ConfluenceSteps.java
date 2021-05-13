@@ -210,6 +210,16 @@ public class ConfluenceSteps extends Pages {
             SeleniumLib.takeAScreenShot("failedToLogoutFromConfluence.jpg");
         }
     }
+
+    @And("^User should be able to delete the page successfully$")
+    public void userShouldBeAbleToDeleteThePageSuccessfully() throws IOException {
+        boolean testResult = false;
+        testResult = confluencePage.deletePage();
+        if (!testResult) {
+            Assert.fail("Could not delete the created page");
+            SeleniumLib.takeAScreenShot("failedToDeleteThePage.jpg");
+        }
+    }
 }
 
 

@@ -39,7 +39,7 @@ public class ConfluencePage {
     @FindBy(xpath = "//input[@id='content-title']")
     public WebElement pageTitle;
 
-    @FindBy(xpath = "//a[contains(text(),'All')]")
+    @FindBy(xpath = "//a[@class='all-spaces-link']")
     public WebElement allSpacesLink;
 
 
@@ -98,6 +98,21 @@ public class ConfluencePage {
 
     @FindBy(xpath = "//a[@id='logout-link']")
     public WebElement logout;
+
+    @FindBy(xpath = "//span[contains(text(),'Delete')]")
+    public WebElement deletePageOptionButton;
+
+    @FindBy(xpath = "//section[@id='delete-page-dialog']")
+    public WebElement deletePagePopUp;
+
+    @FindBy(xpath = "//button[contains(text(),'Delete')]")
+    public WebElement deletePageSectionButton;
+
+    @FindBy(xpath = "//strong[text()='Page deleted']")
+    public WebElement pageDeleteInfoMessage;
+
+    @FindBy(xpath = "//strong[text()='Page deleted']/../following-sibling::span")
+    public WebElement pageDeleteInfoCrossButton;
 
     public ConfluencePage(WebDriver driver) {
         this.driver = driver;
@@ -524,6 +539,32 @@ public class ConfluencePage {
 
         } catch (Exception exp) {
             Debugger.println("Failed to logout");
+            return false;
+        }
+    }
+
+    public boolean deletePage() {
+        try {
+            if (!deletePageOptionButton.isDisplayed()) {
+                Debugger.println("Delete button in page options is not present.");
+                SeleniumLib.takeAScreenShot("DeleteButton.jpg");
+                return false;
+            }
+            deletePageOptionButton.click();
+            Debugger.println("page section Delete button selected successfully");
+            if (!deletePagePopUp.isDisplayed()){
+                Debugger.println("Delete page pop up section is not present.");
+                SeleniumLib.takeAScreenShot("DeletePageSection.jpg");
+                return false;
+            }
+            deletePageSectionButton.click();
+            if (pageDeleteInfoMessage.isDisplayed()) {
+                Debugger.println("page deleted successfully");
+            }
+            pageDeleteInfoCrossButton.click();
+             return true;
+        } catch (Exception exp) {
+            Debugger.println("Failed to delete the created page");
             return false;
         }
     }
