@@ -124,8 +124,6 @@ public class ConfluencePage {
     public boolean loginToConfluence() throws IOException {
         try {
             driver.get(AppConfig.confluencePage);
-            loginlink.isDisplayed();
-            loginlink.click();
             username.sendKeys(AppConfig.confluenceUsername);
             password.sendKeys((AppConfig.confluencePassword));
             loginButton.click();
@@ -165,7 +163,7 @@ public class ConfluencePage {
 
     public boolean allSpaces() throws IOException {
         try {
-            if (allSpacesLink.isDisplayed()){
+            if (allSpacesLink.isDisplayed()) {
                 allSpacesLink.click();
                 Debugger.println("Clicked on the spaces dropdown");
             }
@@ -533,11 +531,11 @@ public class ConfluencePage {
 
     public boolean logoutFromConfluence() {
         try {
-          userOptions.isDisplayed();
-          userOptions.click();
-          Wait.seconds(2);
-          logout.isDisplayed();
-          logout.click();
+            userOptions.isDisplayed();
+            userOptions.click();
+            Wait.seconds(2);
+            logout.isDisplayed();
+            logout.click();
             Debugger.println("Logged out successfully");
             return true;
 
@@ -556,7 +554,7 @@ public class ConfluencePage {
             }
             deletePageOptionButton.click();
             Debugger.println("page section Delete button selected successfully");
-            if (!deletePagePopUp.isDisplayed()){
+            if (!deletePagePopUp.isDisplayed()) {
                 Debugger.println("Delete page pop up section is not present.");
                 SeleniumLib.takeAScreenShot("DeletePageSection.jpg");
                 return false;
@@ -566,7 +564,7 @@ public class ConfluencePage {
                 Debugger.println("page deleted successfully");
             }
             pageDeleteInfoCrossButton.click();
-             return true;
+            return true;
         } catch (Exception exp) {
             Debugger.println("Failed to delete the created page");
             return false;
