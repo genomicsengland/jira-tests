@@ -338,7 +338,7 @@ public class JiraPage {
             String actualStatus = ticketStatus.getText();
             Wait.seconds(2);
             if (!actualStatus.equalsIgnoreCase(expectedStatus)) {
-                Debugger.println("The actual status is not matching with the expected status");
+                Debugger.println("The actual status- " + actualStatus + " is not matching with the expected status- " + expectedStatus);
                 SeleniumLib.takeAScreenShot("actualAndExpectedStatusMismatch.jpg");
                 return false;
             }
@@ -359,16 +359,11 @@ public class JiraPage {
                 WebElement workflowButton1 = driver.findElement(workflowButton);
                 workflowButton1.click();
             }
-            else{
-                By workflowButton = By.xpath("//span[contains(text(),'" + workflow + "')]");
-                WebElement workflowButton1 = driver.findElement(workflowButton);
-                workflowButton1.click();
-            }
             Wait.seconds(3);
             return true;
         } catch (Exception exp) {
-            Debugger.println("Failed to check the ticket status");
-            SeleniumLib.takeAScreenShot("ticketStatus.jpg");
+            Debugger.println("Failed to update the ticket status");
+            SeleniumLib.takeAScreenShot("ticketUpdateStatus.jpg");
             return false;
         }
     }
@@ -418,7 +413,7 @@ public class JiraPage {
                 Debugger.println("The actual type- " + actualTicketType + " is not matching with the expected type- " + expTicketType);
                 SeleniumLib.takeAScreenShot("actualAndExpectedTypeMismatch.jpg");
                 return false;
-            }else{
+            } else {
                 Debugger.println("The actual type- " + actualTicketType + " matched with the expected type- " + expTicketType);
             }
             return true;
@@ -437,7 +432,7 @@ public class JiraPage {
                 Debugger.println("The actual priority- " + actualPriority + " is not matching with the expected priority- " + expPriority);
                 SeleniumLib.takeAScreenShot("actualAndExpectedPriorityMismatch.jpg");
                 return false;
-            }else{
+            } else {
                 Debugger.println("The actual priority- " + actualPriority + " matched with the expected priority- " + expPriority);
             }
             return true;
@@ -456,7 +451,7 @@ public class JiraPage {
                 Debugger.println("The actual description- " + actualDescription + " is not matching with the expected description- " + expDescription);
                 SeleniumLib.takeAScreenShot("actualAndExpectedDescriptionMismatch.jpg");
                 return false;
-            }else{
+            } else {
                 Debugger.println("The actual description- " + actualDescription + " matched with the expected description- " + expDescription);
             }
             return true;
