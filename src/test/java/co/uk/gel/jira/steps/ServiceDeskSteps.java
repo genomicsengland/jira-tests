@@ -68,4 +68,84 @@ public class ServiceDeskSteps extends Pages {
             SeleniumLib.takeAScreenShot("failedToNavigateLoginToServiceDesk.jpg");
         }
     }
+
+    @And("^User should be able to provide the description \"([^\"]*)\"$")
+    public void userShouldBeAbleToProvideTheDescription(String description) throws Throwable {
+        boolean testResult = false;
+        testResult = serviceDeskPage.enterDescription(description);
+        if (!testResult) {
+            Assert.fail("Failed to enter the Description");
+            SeleniumLib.takeAScreenShot("failedToEnterDescription.jpg");
+        }
+    }
+
+    @And("^User should be able to click on \"([^\"]*)\" workflow$")
+    public void userShouldBeAbleToClickOnWorkflow(String workFlow) throws Throwable {
+        boolean testResult = false;
+        testResult = serviceDeskPage.updateTheWorkflow(workFlow);
+        if (!testResult) {
+            Assert.fail("Incorrect ticket workflow - " + workFlow);
+            SeleniumLib.takeAScreenShot("incorrectWorkFlow" + workFlow + ".jpg");
+        }
+    }
+
+    @And("^User should be able to add comment \"([^\"]*)\" for \"([^\"]*)\" workflow$")
+    public void userShouldBeAbleToAddCommentForWorkflow(String comment, String workFlow) throws Throwable {
+        boolean testResult = false;
+        testResult = serviceDeskPage.addComment(comment);
+        if (!testResult) {
+            Assert.fail("Not able to add the comment for workFlow " + workFlow);
+            SeleniumLib.takeAScreenShot("Comment" + workFlow + ".jpg");
+        }
+    }
+
+    @And("^User should be able to click workFlow Transition Button$")
+    public void userShouldBeAbleToClickWorkFlowTransitionButton() throws Throwable {
+        boolean testResult = false;
+        testResult = serviceDeskPage.clickOnTransitionButton();
+        if (!testResult) {
+            Assert.fail("Not able to click on Transition Button");
+            SeleniumLib.takeAScreenShot("TransitionButton.jpg");
+        }
+    }
+
+    @And("^User should be able to select the linked issue as \"([^\"]*)\"$")
+    public void userShouldBeAbleToSelectTheLinkedIssueAs(String linkedIssue) throws Throwable {
+        boolean testResult = false;
+        testResult = serviceDeskPage.selectLinkedIssue(linkedIssue);
+        if (!testResult) {
+            Assert.fail("Not able to select the Linked issue " + linkedIssue + " from dropdwn");
+            SeleniumLib.takeAScreenShot("LinkedIssue.jpg");
+        }
+    }
+
+    @And("^User should be able to select the pending reason \"([^\"]*)\"$")
+    public void userShouldBeAbleToSelectThePendingReason(String pendingReason) throws Throwable {
+        boolean testResult = false;
+        testResult = serviceDeskPage.selectPendingReason(pendingReason);
+        if (!testResult) {
+            Assert.fail("Not able to select the Pending reasaon " + pendingReason + " from dropdwn");
+            SeleniumLib.takeAScreenShot("PendingReason.jpg");
+        }
+    }
+
+    @And("^User should be able to select the resolution as \"([^\"]*)\"$")
+    public void userShouldBeAbleToSelectTheResolutionAs(String resolution) throws Throwable {
+        boolean testResult = false;
+        testResult = serviceDeskPage.selectResolution(resolution);
+        if (!testResult) {
+            Assert.fail("Not able to select the resolution " + resolution + " from dropdwn");
+            SeleniumLib.takeAScreenShot("Resolution.jpg");
+        }
+    }
+
+    @And("^User should be able to select \"([^\"]*)\" from workflow dropdown$")
+    public void userShouldBeAbleToSelectFromWorkflowDropdown(String workFlow) throws Throwable {
+        boolean testResult = false;
+        testResult = serviceDeskPage.selectWorkFlow(workFlow);
+        if (!testResult) {
+            Assert.fail("Not able to select the workFlow " + workFlow + " from dropdwn");
+            SeleniumLib.takeAScreenShot("WorkFlow" + workFlow + ".jpg");
+        }
+    }
 }

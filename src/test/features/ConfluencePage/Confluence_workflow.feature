@@ -5,8 +5,6 @@ Feature: End to end confluence page work flow
   @CreatePage
   Scenario: Login to the confluence page,create a new page and add a simple workflow
     Given User is logged in to the confluence page
-    And User is able to view all the spaces
-    And User should click on the space directory "Test"
     And User should click on the Create a blank page button
     Then User should be able to provide a page title "Test"
     And User should be able to provide the page description"This is for testing purpose"
@@ -22,8 +20,6 @@ Feature: End to end confluence page work flow
   @EditPage
   Scenario: Create a page,add a table and edit the page by deleting the table
     Given User is logged in to the confluence page
-    And User is able to view all the spaces
-    And User should click on the space directory "Test"
     And User should click on the Create a blank page button
     Then User should be able to provide a page title "Test"
     And User should be able to provide the page description"This is for testing purpose"
@@ -37,8 +33,6 @@ Feature: End to end confluence page work flow
   @ExportPage
   Scenario: Access a page from the space directory and export the page to PDF and Word
     Given User is logged in to the confluence page
-    And User is able to view all the spaces
-    And User should click on the space directory "Test"
     And User should click on the Create a blank page button
     Then User should be able to provide a page title "Test"
     And User should be able to provide the page description"This is for testing purpose"
@@ -52,8 +46,6 @@ Feature: End to end confluence page work flow
   @DeletePage
   Scenario: Access a page from the space directory and export the page to PDF and Word
     Given User is logged in to the confluence page
-    And User is able to view all the spaces
-    And User should click on the space directory "Test"
     And User should click on the Create a blank page button
     Then User should be able to provide a page title "Test"
     And User should be able to provide the page description"This is for testing purpose"
