@@ -3,7 +3,7 @@
 Feature: End to end confluence page work flow
 
   @CreatePage
-  Scenario: Login to the confluence page,create a new page and add a simple workflow
+  Scenario: Login to the confluence page,create a new page and workflow transition In progress and Approved
     Given User is logged in to the confluence page
     And User should click on the Create a blank page button
     Then User should be able to provide a page title "Test"
@@ -44,7 +44,7 @@ Feature: End to end confluence page work flow
     Then User should logout from confluence
 
   @DeletePage
-  Scenario: Access a page from the space directory and export the page to PDF and Word
+  Scenario: Access a page from the space directory and delete the created page
     Given User is logged in to the confluence page
     And User should click on the Create a blank page button
     Then User should be able to provide a page title "Test"

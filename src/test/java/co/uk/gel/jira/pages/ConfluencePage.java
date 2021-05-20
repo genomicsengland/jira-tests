@@ -124,8 +124,6 @@ public class ConfluencePage {
     public boolean loginToConfluence() throws IOException {
         try {
             driver.get(AppConfig.confluencePage);
-            loginlink.isDisplayed();
-            loginlink.click();
             username.sendKeys(AppConfig.confluenceUsername);
             password.sendKeys((AppConfig.confluencePassword));
             loginButton.click();

@@ -148,4 +148,14 @@ public class ServiceDeskSteps extends Pages {
             SeleniumLib.takeAScreenShot("WorkFlow" + workFlow + ".jpg");
         }
     }
+
+    @And("^User should be able to see all projects$")
+    public void userShouldBeAbleToSeeAllProjects() throws IOException {
+        boolean testResult = false;
+        testResult = serviceDeskPage.allProjects();
+        if (!testResult) {
+            Assert.fail("Failed to view all the projects");
+            SeleniumLib.takeAScreenShot("failedToSeeAllProjects.jpg");
+        }
+    }
 }

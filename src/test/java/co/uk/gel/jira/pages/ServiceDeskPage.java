@@ -73,6 +73,9 @@ public class ServiceDeskPage {
     @FindBy(xpath = "//select[@id='customfield_10672']")
     public WebElement pendingReasonField;
 
+    @FindBy(xpath = "//a[@id='browse_link']")
+    public WebElement allProjectsLink;
+
     public ServiceDeskPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -92,7 +95,7 @@ public class ServiceDeskPage {
             loginButton.click();
             Wait.seconds(10);
             //Verify whether Login is successful and user can see the dashboard
-            By dashBoardTitle = By.xpath("//h1[text()='Browse projects']");
+            By dashBoardTitle = By.xpath("//h1[text()='System Dashboard']");
             if (!seleniumLib.isElementPresent(dashBoardTitle)) {
 
                 Wait.seconds(5);
@@ -271,6 +274,25 @@ public class ServiceDeskPage {
         } catch (Exception exp) {
             Debugger.println("Failed to select the " + workFlow + " WorkFlow");
             SeleniumLib.takeAScreenShot("WorkFlow.jpg");
+            return false;
+        }
+    }
+
+    public boolean allProjects() throws IOException {
+        try {
+            if (allProjectsLink.isDisplayed()) {
+                allProjectsLink.click();
+                Debugger.println("Clicked on the Projects dropdown");
+            }
+            WebElement projectDirectory = driver.findElement(By.xpath("//a[@id='project_view_all_link_lnk']"));
+            if (projectDirectory.isDisplayed()) {
+                projectDirectory.click();
+                Debugger.println("Clicked on the View all projects directory");
+            }
+            return true;
+        } catch (Exception exp) {
+            Debugger.println("View All Projects link not found" + exp);
+            SeleniumLib.takeAScreenShot("viewAllProjectsLinkNotFound.jpg");
             return false;
         }
     }
